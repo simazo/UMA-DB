@@ -1,0 +1,8 @@
+@use '../mixin/base-header-footer';
+
+.header {
+  @include base-header-footer.base;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}

@@ -1,0 +1,48 @@
+
+[
+  {
+    "name": "ツチノコ", 
+    "size": "S",
+    "area": 1,
+    "description": "",
+    "video": [
+      "xxxx", 
+      "yyyyy"
+    ],
+    "reference": [
+      "",
+      ""
+    ]
+  },
+  {
+    "name": "ネッシー", 
+    "size": "L",
+    "area": 2,
+    "description": "", 
+    "video": [
+      "aaa", 
+      "bbb", 
+      "ccc",
+      "ddd",
+      "fff"
+    ],
+    "reference": [
+      "",
+      ""
+    ]
+  },
+  {
+    "name": "ビッグフット", 
+    "size": "M",
+    "area": 1, 
+    "description": "",
+    "video": [
+      "xxxx", 
+      "yyyyy"
+    ],
+    "reference": [
+      "",
+      ""
+    ]
+  }
+]

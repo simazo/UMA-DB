@@ -1,0 +1,11 @@
+.text-with-icon {
+  display: flex; /* アイコンとテキストを横並びに */
+  align-items: center; /* 垂直方向の中央揃え */
+  gap: 8px; /* アイコンとテキストの間隔 */
+}
+
+.text-with-icon .icon {
+  width: 28px; /* 見出し用に少し小さく設定 */
+  height: auto;
+  display: block;
+}

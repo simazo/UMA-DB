@@ -1,0 +1,45 @@
+@use '../mixin/base-card';
+
+.card {
+  @include base-card.card-base ;
+
+  display: flex;
+  flex-direction: column; // 縦方向のレイアウト
+  align-items: flex-start; // 左寄せに配置
+  justify-content: flex-start; // 上寄せに配置
+  
+  &:hover {
+    @include base-card.card-hover;
+  }
+
+  &-title,
+  &-description {
+    margin-bottom: 0.5rem;
+  }
+
+  &-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &-description {
+    line-height: 1.5;
+  }
+
+  &.new-badge {
+    // バッジを作成する要素をフレックスアイテムとして追加
+    &::before {
+      display: block;
+      content: 'NEW';
+      font-size: 0.8em;
+      font-weight: bold;
+      color: white;
+      background-color: #3998db;
+      padding: 0.4rem 0.4rem;
+      text-transform: uppercase;
+      border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+      transform: rotate(-45deg) translateY(0.5em) translateX(-1.5em);; 
+      transform-origin: top left; // 回転の基準点を調整
+    }
+  }
+}

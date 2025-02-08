@@ -1,0 +1,7 @@
+/* ページ全体の余白 */
+.page-container {
+  padding: 20px; /* ページの上下左右の余白 */
+  max-width: 1200px; /* 最大幅の制限 */
+  margin: 0 auto; /* 水平方向のセンタリング */
+  box-sizing: border-box; /* パディングを含む幅計算 */
+}

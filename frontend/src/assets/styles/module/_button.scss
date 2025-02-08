@@ -1,0 +1,11 @@
+@use '../setting/color';
+@use '../mixin' as mixin;
+
+.button-primary {
+  @include mixin.base-button(#ffffff, color.$primary-color, color.$primary-color, color.$secondary-color, #ffffff);
+}
+
+// 未使用
+// .button-secondary {
+//   @include mixin.base-button(color.$secondary-color, color.$secondary-color, #ffffff, #ffffff, color.$secondary-color);
+// }
