@@ -8,9 +8,9 @@ const BaseButton = styled.button `
   min-width: 140px;
   max-width: 320px;
   width: 100%;
-  background-color: ${(props) => props.bgColor || props.theme.colors.primary};
-  color: ${(props) => props.textColor || props.theme.colors.primary};
-  border: 2px solid ${(props) => props.borderColor || props.theme.colors.primary};
+  background-color: ${(props) => props.$bgColor || props.theme.colors.primary};
+  color: ${(props) => props.$textColor || props.theme.colors.primary};
+  border: 2px solid ${(props) => props.$borderColor || props.theme.colors.primary};
   padding: 0.75rem 1.5rem;
   border-radius: 100vh;
   font-weight: bold;
@@ -22,4 +22,4 @@ const BaseButton = styled.button `
   }
 `
 
-export default BaseButton;
+export default (props) => <BaseButton {...props} />;

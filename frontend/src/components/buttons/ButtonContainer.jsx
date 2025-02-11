@@ -1,4 +1,3 @@
-import React, { Children } from "react";
 import styled from "styled-components";
 import breakpoints from "../styles/breakpoints";
 

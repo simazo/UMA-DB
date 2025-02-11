@@ -12,10 +12,10 @@ const StyledButtonWithIcon = styled.div`
 const ButtonWithIcon = ({ iconSrc, children, ...props }) => {
   return (
     <StyledButtonWithIcon>
-      <ButtonPrimary>
-      <TextWithIcon iconSrc={iconSrc} {...props}>
-        {children}
-      </TextWithIcon>
+      <ButtonPrimary {...props}>
+        <TextWithIcon iconSrc={iconSrc} {...props}>
+          {children}
+        </TextWithIcon>
       </ButtonPrimary>
     </StyledButtonWithIcon>
   );

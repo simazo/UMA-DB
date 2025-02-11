@@ -6,12 +6,12 @@ const InputText = ({placeholder}) => {
   return(
     <BaseInput
       type="text"
-      inputmode="kana"
+      inputMode="kana"
       placeholder={placeholder}
-      textColor={theme.colors.primary}
-      bgColor={theme.colors.quaternary}
-      borderColor={theme.colors.primary}
-      focusBorderColor={theme.colors.secondary}
+      $textColor={theme.colors.primary}
+      $bgColor={theme.colors.quaternary}
+      $borderColor={theme.colors.primary}
+      $focusBorderColor={theme.colors.secondary}
     />
   );
 };

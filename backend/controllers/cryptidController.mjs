@@ -26,7 +26,7 @@ export const getCryptids = async (req, res, next) => {
     // 地域で絞り込み
     if(area) {
       const filteredByArea = await Cryptid.find({ area: Number(area) }).sort({ updatedAt: -1 });
-      return res.json(filteredByArea);
+      return res.json(filteredByArea); 
     }
   } catch (error) {
     console.log(`Error occurred:${error}`);
