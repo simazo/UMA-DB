@@ -1,5 +1,10 @@
 import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
 import router from "./routes/index.mjs"
+
+dotenv.config();
+
 if (process.env.NODE_ENV !== 'test') {
   import("./helpers/db.mjs")
     .then(() => {
@@ -13,6 +18,13 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 const app = express();
+
+const allowedOrigins = process.env.FRONTEND_ORIGIN?.split(",") || ["http://localhost:3000"];
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use(express.json());
 app.use(router);

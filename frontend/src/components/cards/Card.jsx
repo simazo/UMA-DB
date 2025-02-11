@@ -27,6 +27,7 @@ const CardTitle = styled.h3`
 const CardDescription = styled.p`
   line-height: 1.5;
   margin-bottom: 0.5rem;
+  white-space: pre-line; /* 改行を表示し、レイアウト崩れを防ぐ */
 `;
 
 const CardBadge = styled.div`
