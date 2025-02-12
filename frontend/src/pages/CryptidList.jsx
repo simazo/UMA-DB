@@ -62,14 +62,19 @@ const CryptidList = () => {
       <Section>
         <h4>
           { queryKey && filterValue 
-          ? `${filterCategory}: ${filterValue}`
+          ? `${filterCategory}: 「${filterValue}」 で絞り込み`
           : "条件なし" }
         </h4>
       </Section>
       <Section>
         {error ? <p style={{ color: "red" }}>{error}</p> : null}
         <HeadSecondary>
-        <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">{cryptids.length}体</TextWithIcon>
+        <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">
+          {cryptids.length === 0
+            ? "見つかりませんでした"
+            : `${cryptids.length}件のUMAが見つかりました`
+          }
+        </TextWithIcon>
         </HeadSecondary>
         <CardContainer>
           {cryptids.map((cryptid) => (
