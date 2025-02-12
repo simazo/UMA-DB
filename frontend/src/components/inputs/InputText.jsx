@@ -1,13 +1,13 @@
 import BaseInput from "./BaseInput";
 import { useTheme } from "styled-components";
 
-const InputText = ({placeholder}) => {
+const InputText = ({...props}) => {
   const theme = useTheme();
   return(
     <BaseInput
       type="text"
       inputMode="kana"
-      placeholder={placeholder}
+      {...props}
       $textColor={theme.colors.primary}
       $bgColor={theme.colors.quaternary}
       $borderColor={theme.colors.primary}
