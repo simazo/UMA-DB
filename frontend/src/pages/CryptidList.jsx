@@ -8,6 +8,7 @@ import TextWithIcon from "../components/TextWithIcon";
 import imageConfig from "../config/imageConfig";
 
 const CryptidList = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const [ cryptids, setCryptids ] = useState([]); 
   const [error, setError] = useState(null);
   const imageUrl = imageConfig.imageUrl;
@@ -42,7 +43,7 @@ const CryptidList = () => {
   useEffect(() => {  
     if (!queryKey || !queryValue) return;
 
-    fetch(`http://localhost:8080/cryptids?${queryKey}=${queryValue}`)
+    fetch(`${API_BASE_URL}/cryptids?${queryKey}=${queryValue}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
