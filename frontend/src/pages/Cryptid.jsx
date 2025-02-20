@@ -20,6 +20,7 @@ import {Video, VideoContainer} from "../components/videos";
 import {Link} from "react-router-dom";
 
 const Cryptid = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const { id } = useParams();
   const [ cryptid, setCryptid ] = useState(null);
   const imageUrl = imageConfig.imageUrl;
@@ -39,7 +40,7 @@ const Cryptid = () => {
   
   useEffect(() => {
     if (!id) return;
-    fetch(`http://localhost:8080/cryptids/${id}`)
+    fetch(`${API_BASE_URL}/cryptids/${id}`)
     .then((res) => res.json())
     .then((data) => {
       setCryptid(data)
