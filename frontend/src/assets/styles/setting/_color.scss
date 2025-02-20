@@ -1,0 +1,23 @@
+@use 'sass:color';
+// ベースカラー
+$primary-color: #013220; 
+$secondary-color: color.scale($primary-color, $lightness: 30%);
+$tertiary-color: #ffa200;
+
+// 中立的なカラー
+$neutral-light: #e7f0f3;  // 明るいグレー
+$neutral-dark: #34495e;  // ダークグレー
+
+// 背景色
+$background-light: #f7f7f7;  // 明るい背景
+$background-dark: #2c3e50;  // ダーク背景
+
+// テキストカラー
+$text-primary: #2c3e50;  // 主なテキスト色
+$text-secondary: #7f8c8d;  // サブテキスト色
+$text-link: #2980b9;  // リンクの色
+
+// 成功、警告、エラー
+$success-color: #27ae60;  // 成功の色
+$warning-color: #f39c12;  // 警告の色
+$error-color: #e74c3c;  // エラーの色

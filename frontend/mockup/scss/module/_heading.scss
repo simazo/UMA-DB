@@ -1,0 +1,14 @@
+@use '../setting/color';
+@use '../mixin/base-heading';
+
+.head-primary {
+  @include base-heading.head-base;
+  padding: 0.5em;
+  background: color.$neutral-light;
+  border-left: solid 4px color.$tertiary-color;
+}
+
+.head-secondary {
+  @include base-heading.head-base;
+  border-bottom: double 5px color.$tertiary-color;
+}

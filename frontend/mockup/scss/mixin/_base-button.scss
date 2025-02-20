@@ -1,0 +1,25 @@
+@mixin base-button($bg-color, $border-color, $text-color, $hover-bg-color, $hover-text-color) {
+  display: flex;
+  align-items: center;  // 縦方向で中央揃え
+  justify-content: center; // 水平方向で中央揃え
+  gap: 8px; // アイコンとテキストの間隔を広げる
+  min-width: 140px; // 最小幅を指定
+  max-width: 320px; // 最大幅を指定
+  width: 100%; // 親要素に応じて拡張可能
+  background-color: $bg-color;
+  color: $text-color;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid $border-color;
+  border-radius: 100vh;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    // background-color: $hover-bg-color;
+    // color: $hover-text-color;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+}

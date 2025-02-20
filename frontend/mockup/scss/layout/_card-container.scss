@@ -1,0 +1,25 @@
+@use '../mixin/responsive';
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
+  gap: 1rem;
+  padding: 1rem;
+
+  @include responsive.responsive(sp) {
+    grid-template-columns: repeat(2, 1fr); /* 2列 */
+  }
+
+  @include responsive.responsive(tablet) {
+    grid-template-columns: repeat(3, 1fr); /* 3列 */
+  }
+
+  @include responsive.responsive(pc) {
+    grid-template-columns: repeat(4, 1fr); /* 4列 */
+  }
+
+  @include responsive.responsive(wide-pc) {
+    grid-template-columns: repeat(5, 1fr); /* 5列 */
+  }
+}
+

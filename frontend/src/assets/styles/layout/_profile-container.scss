@@ -1,0 +1,133 @@
+@use '../mixin/responsive';
+@use '../setting/color';
+
+.profile-container {
+  display: flex;
+  justify-content: center; /* 水平方向に中央寄せ */
+  align-items: center; /* 垂直方向に中央寄せ */
+  margin: 0; /* 不要な余白を排除 */
+  padding: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.profile-column {
+  display: flex;
+  //gap: 20px;
+  width: 100%;
+}
+
+.left-column{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 7; // 左カラムを全体の70%幅に
+  //max-width: 70%
+
+  max-width: 200px; // 大きい画像の最大幅(小さい画像の横幅と合わせる)
+
+  @include responsive.responsive(sp) {
+    max-width: 200px;
+  }
+
+  @include responsive.responsive(tablet) {
+    max-width: 300px;
+  }
+
+  @include responsive.responsive(pc) {
+    max-width: 400px;
+  }
+
+  @include responsive.responsive(wide-pc) {
+    max-width: 500px;
+  }
+}
+
+.large-image {
+  width: 100%;
+  height: auto;
+}
+
+.small-images-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%; // 親要素（左カラム）の幅に合わせる
+}
+
+.small-images-row img {
+  width: 30%;
+  height: auto;
+  object-fit: cover;
+}
+
+.right-column {
+  flex: 3; // 右カラムを全体の30%幅に
+  align-items: flex-start;
+  justify-content: center;
+  
+}
+
+.profile-item {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 16px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+
+  @include responsive.responsive(pc) {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-left: 40px;
+  }
+  
+  @include responsive.responsive(wide-pc) {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    margin-left: 60px;
+  }
+}
+
+.profile-label {
+  font-weight: bold;
+  font-size: 90%;
+
+  background: color.$neutral-light;
+  border-left: solid 2px color.$tertiary-color;
+
+  @include responsive.responsive(pc) {
+    font-size: 110%;
+  }
+  @include responsive.responsive(wide-pc) {
+    font-size: 130%;
+  }
+}
+
+.profile-text {
+  font-size: 80%;
+
+  @include responsive.responsive(pc) {
+    font-size: 100%;
+  }
+  @include responsive.responsive(wide-pc) {
+    font-size: 120%;
+  }
+}
+.description-container {
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.8;
+  text-align: justify;
+  //border-radius: 8px;
+  //box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  font-size: 90%;
+  @include responsive.responsive(pc) {
+    font-size: 100%;
+  }
+  @include responsive.responsive(wide-pc) {
+    font-size: 110%;
+  }
+}

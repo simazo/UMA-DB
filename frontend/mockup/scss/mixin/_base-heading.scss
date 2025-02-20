@@ -1,0 +1,5 @@
+@use '../setting/color';
+
+@mixin head-base {
+  color: color.$primary-color;
+}

@@ -1,0 +1,32 @@
+@use '../mixin/responsive';
+@use '../setting/breakpoints';
+@use 'sass:map';
+
+.section {
+  max-width: 100%;
+  padding: 0 8px; 
+  margin: 0 auto;
+  margin-bottom: 20px;
+
+  @include responsive.responsive(sp) {
+    padding: 0 16px;
+  }
+
+  @include responsive.responsive(tablet) {
+    max-width: map.get(breakpoints.$breakpoints, tablet);
+    padding: 0 24px;
+    margin-bottom: 30px;
+  }
+
+  @include responsive.responsive(pc) {
+    max-width: map.get(breakpoints.$breakpoints, pc);
+    padding: 0 32px;
+    margin-bottom: 48px;
+  }
+
+  @include responsive.responsive(wide-pc) {
+    max-width: map.get(breakpoints.$breakpoints, wide-pc);
+    padding: 0 40px;
+    margin-bottom: 52px;
+  }
+}

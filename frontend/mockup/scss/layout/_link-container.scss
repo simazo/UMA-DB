@@ -1,0 +1,11 @@
+.link-container {
+  display: flex;
+  flex-direction:column;
+  gap: 16px;
+  padding: 10px;
+}
+
+.link-item {
+  font-size: 90%;
+  margin-bottom: 4px;
+}
