@@ -1,0 +1,28 @@
+name: unit-tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js をセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: パッケージをインストール
+        run: npm install
+
+      - name: バックエンドのテスト実行
+        run: npm run test:backend
+
+      # - name: フロントエンドのテスト実行
+      #   run: npm run test:frontend
