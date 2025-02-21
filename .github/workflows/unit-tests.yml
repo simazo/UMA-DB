@@ -18,11 +18,5 @@ jobs:
         with:
           node-version: '18'
 
-      - name: パッケージをインストール
-        run: npm install
-
-      - name: バックエンドのテスト実行
-        run: npm run test:backend
-
-      # - name: フロントエンドのテスト実行
-      #   run: npm run test:frontend
+      - name: バックエンドの依存関係をインストールし、テストを実行
+        run: cd backend && npm install && npm test
