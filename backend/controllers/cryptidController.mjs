@@ -56,8 +56,8 @@ export const getCryptidById = async (req, res, next) => {
     "_id name"
   ) || [];
 
-  console.log("--relatedUMAs--");
-  console.log(relatedUMAs);
+  // console.log("--relatedUMAs--");
+  // console.log(relatedUMAs);
 
   res.json({ ...cryptid.toObject(), related_uma: relatedUMAs });
 };
