@@ -57,6 +57,9 @@ const Cryptid = () => {
     <>
       <Section>
       <HeadPrimary>{cryptid ? `${cryptid.name}の情報` : "Loading..."}</HeadPrimary>
+      <p style={{ textAlign: 'right', fontSize: '80%' }}>
+        登録日：{new Date(cryptid.createdAt).toLocaleDateString()}
+      </p>
       </Section>
       <Section>
         <ProfileContainer>
@@ -124,7 +127,7 @@ const Cryptid = () => {
                   <iframe
                     src={videoUrl}
                     title={`${cryptid.name} Video ${index + 1}`}
-                    frameborder="0"
+                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen

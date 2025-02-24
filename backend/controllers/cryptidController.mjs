@@ -1,40 +1,38 @@
 import { Cryptid } from "../models/cryptid.mjs";
 
 export const getCryptids = async (req, res, next) => {
-  const { size, area, name } = req.query;
+  const { size, area, name, limit = 10, page = 1 } = req.query;
+  console.log('Request URL:', req.originalUrl);
 
   try {
-    // クエリパラメータが少なくとも1つは存在するかチェック
-    if (!size && !area && !name) {
-      const error = new Error("At least one query parameter (size, area, name) is required.");
-      error.status = 400;
-      return next(error);
-    }
+    let query = {};
 
-    // 名前で絞り込み
     if (name) {
-      const filteredByNameOrAlias = await Cryptid.find({
-        $or: [
-          { name: { $regex: name, $options: "i" } },
-          { alias: { $regex: name, $options: "i" } }
-        ]
-      }).sort({ updatedAt: -1 });
-    
-      return res.json(filteredByNameOrAlias);
+      query.$or = [
+        { name: { $regex: name, $options: "i" } },
+        { alias: { $regex: name, $options: "i" } }
+      ];
     }
-    
-
-    // サイズで絞り込み
-    if(size) {
-      const filteredBySize = await Cryptid.find({ size: size }).sort({ updatedAt: -1 });
-      return res.json(filteredBySize);
+    if (size) {
+      query.size = size;
+    }
+    if (area) {
+      query.area = Number(area);
     }
 
-    // 地域で絞り込み
-    if(area) {
-      const filteredByArea = await Cryptid.find({ area: Number(area) }).sort({ updatedAt: -1 });
-      return res.json(filteredByArea); 
-    }
+    const limitValue = Math.min(parseInt(limit), 100); // 最大100件まで
+    const skipValue = (parseInt(page) - 1) * limitValue;
+
+    // sortがあれば指定、なければupdatedAtの降順
+    const sortValue = req.query.sort ? { [req.query.sort.replace('-', '')]: req.query.sort.startsWith('-') ? -1 : 1 } : { updatedAt: -1 };
+
+    const cryptids = await Cryptid.find(query)
+    .sort(sortValue)
+    .skip(skipValue)
+    .limit(limitValue);
+  
+    res.json(cryptids);
+
   } catch (error) {
     console.log(`Error occurred:${error}`);
     next(error);

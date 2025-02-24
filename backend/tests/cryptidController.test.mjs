@@ -8,12 +8,8 @@ import { Cryptid } from "../models/cryptid.mjs";
 jest.mock("../models/cryptid.mjs", () => {
   return {
     Cryptid: {
-      find: jest.fn().mockReturnValue({
-        //sort: jest.fn().mockReturnThis(),  // sortメソッドもモック
-        
-      }),
+      find: jest.fn().mockReturnValue(),
       findById: jest.fn(),
-      //toObject: jest.fn(),
     },
   };
 });
@@ -53,27 +49,6 @@ describe("getCryptidById", () => {
 
     await getCryptidById(req, res, mockNext);
     
-    // mockDataのtoObjectメソッドが返す値をログ出力
-  // console.log('mockData.toObject()の返り値:', mockData.toObject.mock.results[0].value);
-
-  // // res.jsonが呼ばれた際の引数をログ出力
-  // console.log('res.jsonが呼ばれた際の引数:', res.json.mock.calls[0][0]);
-
-  // console.log('res.jsonが呼ばれた際の引数:', res.json.mock.calls[0][0]);
-
-  // console.log('res.json:', res.json);
-  // console.log('mock data:', mockData);
-
-  // expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-  //   id: 1,
-  //   name: "Bigfoot",
-  //   size: "L",
-  //   area: 1,
-  //   related_uma: [],
-  // }));
-
-    //expect(res.json).toHaveBeenCalledWith(mockData);
-    
     expect(res.json).toHaveBeenCalledWith({
       ...mockData.toObject(),
       related_uma: []
@@ -105,7 +80,7 @@ describe("getCryptids", () => {
   };
   const mockNext = jest.fn();
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
@@ -116,12 +91,14 @@ describe("getCryptids", () => {
       area: 1
     }];
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockResolvedValue([mockData[0]]),
-    });
-
     const req = mockReq({ name: "犬" });
     const res = mockRes();
+
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(mockData),
+    });
 
     await getCryptids(req, res, mockNext);
 
@@ -143,12 +120,14 @@ describe("getCryptids", () => {
       area: 2
     }];
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockResolvedValue([mockData[0]]),
-    });
-
     const req = mockReq({ size: "L" });
     const res = mockRes();
+
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(mockData),
+    });
 
     await getCryptids(req, res, mockNext);
 
@@ -164,12 +143,14 @@ describe("getCryptids", () => {
       area: 3
     }];
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockResolvedValue([mockData[0]]),
-    });
-
     const req = mockReq({ area: 3 });
     const res = mockRes();
+
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(mockData),
+    });
 
     await getCryptids(req, res, mockNext);
 
@@ -178,18 +159,163 @@ describe("getCryptids", () => {
     expect(mockNext).not.toHaveBeenCalled();
   });
 
-  test("クエリパラメータがない場合はnext()でエラーを渡す", async () => {
-    // Cryptid.findByIdがnullを返すようにモック化
-    Cryptid.findById.mockResolvedValue(null);
-    
+  test("sortが指定されていない場合、updatedAtの降順にソートされる", async () => {
+    const mockData = [
+      {
+        name: "Bigfoot",
+        size: "L",
+        area: 1,
+        createdAt: "2024-02-23T00:00:00.000Z"
+      },
+      {
+        name: "Nessie",
+        size: "XL",
+        area: 2,
+        createdAt: "2024-02-22T00:00:00.000Z"
+      }
+    ];
+
     const req = mockReq({});
     const res = mockRes();
 
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(mockData),
+    });
+
     await getCryptids(req, res, mockNext);
 
-    // nextにエラーが渡されることを検証
-    expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
-    expect(mockNext.mock.calls[0][0].message).toBe("At least one query parameter (size, area, name) is required.");
+    // Cryptid.findの呼び出しで、updatedAtの降順（-1）でソートされているかを確認
+    expect(Cryptid.find().sort).toHaveBeenCalledWith({ updatedAt: -1 });  // 降順確認
+
+    expect(res.json).toHaveBeenCalledWith(mockData);
+    expect(mockNext).not.toHaveBeenCalled();
   });
 
+  /*
+  sortの使い方
+  ?sort=-name → name の降順 (Z → A)
+  ?sort=name → name の昇順 (A → Z)
+  */
+
+  test("sortが降順で指定されている場合、降順でソートされる", async () => {
+    const mockData = [
+      {
+        name: "Bigfoot",
+        size: "L",
+        area: 1,
+        createdAt: "2024-02-23T00:00:00.000Z"
+      },
+      {
+        name: "Nessie",
+        size: "XL",
+        area: 2,
+        createdAt: "2024-02-22T00:00:00.000Z"
+      }
+    ];
+
+    const req = mockReq({sort: "-createdAt"});
+    const res = mockRes();
+
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(mockData),
+    });
+
+    await getCryptids(req, res, mockNext);
+
+    // Cryptid.findの呼び出しで、降順（-1）でソートされているかを確認
+    expect(Cryptid.find().sort).toHaveBeenCalledWith({ createdAt: -1 });
+  
+    expect(res.json).toHaveBeenCalledWith(mockData);
+    expect(mockNext).not.toHaveBeenCalled();
+  });
+
+  test("sortが昇順で指定されている場合、昇順でソートされる", async () => {
+    const mockData = [
+      {
+        name: "Bigfoot",
+        size: "L",
+        area: 1,
+        createdAt: "2024-02-23T00:00:00.000Z"
+      },
+      {
+        name: "Nessie",
+        size: "XL",
+        area: 2,
+        createdAt: "2024-02-22T00:00:00.000Z"
+      }
+    ];
+
+    const req = mockReq({sort: "createdAt"});
+    const res = mockRes();
+
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(mockData),
+    });
+
+    await getCryptids(req, res, mockNext);
+
+    // Cryptid.findの呼び出しで、昇順（1）でソートされているかを確認
+    expect(Cryptid.find().sort).toHaveBeenCalledWith({ createdAt: 1 });
+  
+    expect(res.json).toHaveBeenCalledWith(mockData);
+    expect(mockNext).not.toHaveBeenCalled();
+  });
+
+  test("limit指定なしの場合、最大10件取得される", async () => {
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(new Array(10)), // 10件のデータを返す
+    });
+  
+    const req = { query: {} }; // limit指定なし
+    const res = { json: jest.fn() };
+  
+    await getCryptids(req, res);
+  
+    expect(Cryptid.find().limit).toHaveBeenCalledWith(10);
+    expect(res.json).toHaveBeenCalledWith(expect.any(Array));
+    expect(res.json.mock.calls[0][0]).toHaveLength(10);
+  });
+  
+  test("limit=5 を指定した場合、5件取得される", async () => {
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(new Array(5)), // 5件のデータを返す
+    });
+  
+    const req = { query: { limit: "5" } };
+    const res = { json: jest.fn() };
+  
+    await getCryptids(req, res);
+  
+    expect(Cryptid.find().limit).toHaveBeenCalledWith(5);
+    expect(res.json).toHaveBeenCalledWith(expect.any(Array));
+    expect(res.json.mock.calls[0][0]).toHaveLength(5);
+  });
+  
+  test("limit=101 を指定した場合、MAX値である最大100件取得される", async () => {
+    Cryptid.find.mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      limit: jest.fn().mockResolvedValue(new Array(100)), // 100件のデータを返す
+    });
+  
+    const req = { query: { limit: "101" } };
+    const res = { json: jest.fn() };
+  
+    await getCryptids(req, res);
+  
+    expect(Cryptid.find().limit).toHaveBeenCalledWith(100);
+    expect(res.json).toHaveBeenCalledWith(expect.any(Array));
+    expect(res.json.mock.calls[0][0]).toHaveLength(100);
+  });
+  
 });
