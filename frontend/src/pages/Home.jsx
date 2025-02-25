@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { AREA, SIZE } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
@@ -7,11 +7,17 @@ import { Card, CardContainer} from "../components/cards";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import { InputText } from "../components/inputs";
 import TextWithIcon from "../components/TextWithIcon";
+import imageConfig from "../config/imageConfig";
 
 const Home = () => {
   const navigate = useNavigate();
   const [searchNameText, setSearchNameText] = useState("");
   const [isComposing, setIsComposing] = useState(false);
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const [ latestCryptids, setLatestCryptids ] = useState([]); 
+  const [ error, setError ] = useState(null);
+  const imageUrl = imageConfig.imageUrl;
 
   // エリアボタンクリック
   const handleAreaButtonClick = (area) => {
@@ -31,8 +37,29 @@ const Home = () => {
     if (event.key === "Enter" && !isComposing) {
       navigate(`/cryptids?name=${encodeURIComponent(searchNameText)}`);
     }
-    
   }
+
+  useEffect(() => {
+      const fetchLatestCryptids = async () => {
+        try {
+
+          //最新10件
+          const response = await fetch(`${API_BASE_URL}/cryptids?limit=10&sort=-createdAt`);
+  
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          setLatestCryptids(data);
+        } catch (error) {
+          console.error("Error fetching latest cryptids:", error);
+          setError("データの取得に失敗しました。");
+        }
+      };
+  
+      fetchLatestCryptids();
+    }, []);
 
   return (
     <>
@@ -42,19 +69,24 @@ const Home = () => {
       <Section>
         <h4>世界中のUMA情報を集めたデータベース</h4>
       </Section>
-      {/* <Section>
+      <Section>
+        {error ? <p style={{ color: "red" }}>{error}</p> : null}
         <HeadSecondary>
           <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">最近追加されたUMA</TextWithIcon>
         </HeadSecondary>
         <CardContainer>
-          <Card 
-            imageSrc="image/flogman.jpeg"
-            title="カードのタイトル"
-            description="これはカードの説明文です。詳細な情報をここに記載します"
-            isNew={true}
-          />
+          {latestCryptids.map((cryptid) => (
+            <Card
+              key={cryptid._id}
+              imageSrc={`${imageUrl}/${cryptid.id}/thumbnail.jpeg`}
+              title={cryptid.name}
+              description={`${cryptid.description.slice(0, 40)}...`}
+              isNew={true}
+              to={`/cryptids/${cryptid._id}`}
+              />
+          ))}
         </CardContainer>
-      </Section> */}
+      </Section>
       <Section>
         <HeadSecondary>
           <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">目撃エリアから探す</TextWithIcon>

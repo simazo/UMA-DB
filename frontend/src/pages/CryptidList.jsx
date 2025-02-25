@@ -10,52 +10,56 @@ import imageConfig from "../config/imageConfig";
 const CryptidList = () => {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const [ cryptids, setCryptids ] = useState([]); 
-  const [error, setError] = useState(null);
+  const [ error, setError ] = useState(null);
   const imageUrl = imageConfig.imageUrl;
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const area = params.get("area");
-  const size = params.get("size");
-  const name = params.get("name");
   
-  // どのクエリが渡ってきているか判定（いずれか1つのみ）
-  const queryKey = area ? "area" : size ? "size" : name ? "name" : null;
-  const queryValue = area || size || name;
+  // クエリパラメータの取得
+  const queryParams = {};
+  ["area", "size", "name", "sort", "limit", "page"].forEach((key) => {
+    const value = params.get(key);
+    if (value) queryParams[key] = value;
+  });
 
-  const filterCategory = queryKey === "area"
+  // フィルターの表示用情報
+  const filterCategory = queryParams.area
     ? "目撃エリア"
-    : queryKey === "size"
+    : queryParams.size
     ? "サイズ"
-    : queryKey === "name"
+    : queryParams.name
     ? "名前"
     : "";
 
-  const filterValue =
-    queryKey === "area"
-      ? AREA.find((a) => a.id === Number(area))?.alt || "不明なエリア"
-      : queryKey === "size"
-      ? SIZE.find((s) => s.id === size)?.alt || "不明なサイズ"
-      : queryKey === "name"
-      ? name
-      : "";
+  const filterValue = queryParams.area
+    ? AREA.find((a) => a.id === Number(queryParams.area))?.alt || "不明なエリア"
+    : queryParams.size
+    ? SIZE.find((s) => s.id === queryParams.size)?.alt || "不明なサイズ"
+    : queryParams.name
+    ? queryParams.name
+    : "";
 
-  useEffect(() => {  
-    if (!queryKey || !queryValue) return;
+  useEffect(() => {
+    const fetchCryptids = async () => {
+      try {
+        const queryString = new URLSearchParams(queryParams).toString();
+        const response = await fetch(`${API_BASE_URL}/cryptids?${queryString}`);
 
-    fetch(`${API_BASE_URL}/cryptids?${queryKey}=${queryValue}`)
-      .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => setCryptids(data))
-      .catch((error) => {
+
+        const data = await response.json();
+        setCryptids(data);
+      } catch (error) {
         console.error("Error fetching cryptids:", error);
         setError("データの取得に失敗しました。");
-      });
-  }, [queryKey, queryValue]);
+      }
+    };
+
+    fetchCryptids();
+  }, [location.search]);
 
   return (
     <>
@@ -64,9 +68,9 @@ const CryptidList = () => {
       </Section>
       <Section>
         <h4>
-          { queryKey && filterValue 
-          ? `${filterCategory}: 「${filterValue}」 で絞り込み`
-          : "条件なし" }
+          {filterCategory && filterValue
+            ? `${filterCategory}: 「${filterValue}」 で絞り込み`
+            : "条件なし"}
         </h4>
       </Section>
       <Section>
