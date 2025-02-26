@@ -20,7 +20,7 @@ export const getCryptids = async (req, res, next) => {
       query.area = Number(area);
     }
 
-    const limitValue = Math.min(parseInt(limit), 100); // 最大100件まで
+    const limitValue = Math.min(parseInt(limit) || 10, 20); // 上限20件まで 
     const skipValue = (parseInt(page) - 1) * limitValue;
 
     // sortがあれば指定、なければupdatedAtの降順

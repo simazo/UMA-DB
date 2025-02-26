@@ -301,21 +301,21 @@ describe("getCryptids", () => {
     expect(res.json.mock.calls[0][0]).toHaveLength(5);
   });
   
-  test("limit=101 を指定した場合、MAX値である最大100件取得される", async () => {
+  test("limit=21 を指定した場合、MAX値である最大20件取得される", async () => {
     Cryptid.find.mockReturnValue({
       sort: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(new Array(100)), // 100件のデータを返す
+      limit: jest.fn().mockResolvedValue(new Array(20)), // 20件のデータを返す
     });
   
-    const req = { query: { limit: "101" } };
+    const req = { query: { limit: "21" } };
     const res = { json: jest.fn() };
   
     await getCryptids(req, res);
   
-    expect(Cryptid.find().limit).toHaveBeenCalledWith(100);
+    expect(Cryptid.find().limit).toHaveBeenCalledWith(20);
     expect(res.json).toHaveBeenCalledWith(expect.any(Array));
-    expect(res.json.mock.calls[0][0]).toHaveLength(100);
+    expect(res.json.mock.calls[0][0]).toHaveLength(20);
   });
   
 });
