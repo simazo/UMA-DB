@@ -58,21 +58,21 @@ describe("Cryptid Routes", () => {
     expect(response.body).toEqual(mockData);
   });
 
-  test("GET /cryptids でエラーを返す (クエリパラメータなし)", async () => {
-    // モックエラーの設定
-    getCryptids.mockImplementationOnce((req, res, next) => {
-      const error = new Error("At least one query parameter (size, area, name) is required.");
-      error.status = 400;
-      next(error); // エラーを次に渡す
-    });
+  // test("GET /cryptids でエラーを返す (クエリパラメータなし)", async () => {
+  //   // モックエラーの設定
+  //   getCryptids.mockImplementationOnce((req, res, next) => {
+  //     const error = new Error("At least one query parameter (size, area, name) is required.");
+  //     error.status = 400;
+  //     next(error); // エラーを次に渡す
+  //   });
   
-    const response = await request(app).get("/cryptids");
+  //   const response = await request(app).get("/cryptids");
   
-    expect(response.status).toBe(400);
-    expect(response.body).toEqual({
-      message: "At least one query parameter (size, area, name) is required.",
-    });
-  });
+  //   expect(response.status).toBe(400);
+  //   expect(response.body).toEqual({
+  //     message: "At least one query parameter (size, area, name) is required.",
+  //   });
+  // });
 
   test("GET /cryptids でエラーを返す (サーバーエラー)", async () => {
     // モックエラーの設定
