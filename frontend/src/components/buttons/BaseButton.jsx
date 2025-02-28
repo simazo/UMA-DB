@@ -14,11 +14,13 @@ const BaseButton = styled.button `
   padding: 0.75rem 1.5rem;
   border-radius: 100vh;
   font-weight: bold;
-  cursor: pointer;
+  //cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}; // disabled の場合 cursor を変更
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)}; // disabled の場合 透明度を下げる
   transition: background-color 0.3s ease, transform 0.3s ease;
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: ${(props) => (props.disabled ? "none" : "scale(1.05)")}; // disabled の場合、ホバー効果なし
+    box-shadow: ${(props) => (props.disabled ? "none" : "0 8px 16px rgba(0, 0, 0, 0.3)")}; // disabled の場合、シャドウなし
   }
 `
 

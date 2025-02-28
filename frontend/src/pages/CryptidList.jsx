@@ -6,7 +6,8 @@ import { AREA, SIZE } from "../constants";
 import { Card, CardContainer } from "../components/cards";
 import TextWithIcon from "../components/TextWithIcon";
 import imageConfig from "../config/imageConfig";
-import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
+import { PaginationContainer, PaginationInfo } from "../components/paginations";
+import { ButtonWithIcon } from "../components/buttons";
 
 const CryptidList = () => {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -115,21 +116,15 @@ const CryptidList = () => {
         </CardContainer>
       </Section>
       <Section>
-        <ButtonContainer>
-          <button 
-            onClick={() => handlePageChange(currentPage - 1)} 
-            disabled={!pagination.hasPrevPage}
-          >
-            Previous
-          </button>
-          <span> Page {currentPage} of {pagination.totalPages} </span>
-          <button 
-            onClick={() => handlePageChange(currentPage + 1)} 
-            disabled={!pagination.hasNextPage}
-          >
-            Next
-          </button>
-        </ButtonContainer>
+        <PaginationContainer>
+          <ButtonWithIcon key="back" onClick={() => handlePageChange(currentPage - 1)} disabled={!pagination.hasPrevPage} iconSrc="image/i-orange-issie.svg" alt="前へ戻る">
+            前へ
+          </ButtonWithIcon>
+          <PaginationInfo currentPage={currentPage} totalPages={pagination.totalPages} />
+          <ButtonWithIcon key="next" onClick={() => handlePageChange(currentPage + 1)} disabled={!pagination.hasNextPage} iconSrc="image/i-orange-issie.svg" alt="次へ進む">
+            次へ
+          </ButtonWithIcon>
+        </PaginationContainer>
       </Section>
     </>
   );
