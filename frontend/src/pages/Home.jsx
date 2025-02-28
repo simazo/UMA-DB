@@ -44,7 +44,7 @@ const Home = () => {
       try {
 
         //最新10件
-        const response = await fetch(`${API_BASE_URL}/cryptids?limit=10&sort=-createdAt`);
+        const response = await fetch(`${API_BASE_URL}/cryptids?limit=4&sort=-createdAt`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
