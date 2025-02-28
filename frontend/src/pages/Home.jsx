@@ -40,26 +40,26 @@ const Home = () => {
   }
 
   useEffect(() => {
-      const fetchLatestCryptids = async () => {
-        try {
+    const fetchLatestCryptids = async () => {
+      try {
 
-          //最新10件
-          const response = await fetch(`${API_BASE_URL}/cryptids?limit=10&sort=-createdAt`);
-  
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-  
-          const data = await response.json();
-          setLatestCryptids(data);
-        } catch (error) {
-          console.error("Error fetching latest cryptids:", error);
-          setError("データの取得に失敗しました。");
+        //最新10件
+        const response = await fetch(`${API_BASE_URL}/cryptids?limit=10&sort=-createdAt`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      };
-  
-      fetchLatestCryptids();
-    }, []);
+
+        const data = await response.json();
+        setLatestCryptids(data.cryptids);
+      } catch (error) {
+        console.error("Error fetching latest cryptids:", error);
+        setError("データの取得に失敗しました。");
+      }
+    };
+
+    fetchLatestCryptids();
+  }, []);
 
   return (
     <>

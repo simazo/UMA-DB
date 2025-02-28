@@ -8,8 +8,9 @@ import { Cryptid } from "../models/cryptid.mjs";
 jest.mock("../models/cryptid.mjs", () => {
   return {
     Cryptid: {
-      find: jest.fn().mockReturnValue(),
+      find: jest.fn(),
       findById: jest.fn(),
+      paginate: jest.fn(),
     },
   };
 });
@@ -42,7 +43,7 @@ describe("getCryptidById", () => {
     Cryptid.findById.mockResolvedValue(mockData);
 
     // findメソッドが空の配列を返すように設定
-    Cryptid.find.mockResolvedValue([]);
+    Cryptid.paginate.mockResolvedValue([]);
 
     const req = mockReq({ id: mockData.id });
     const res = mockRes();
@@ -91,25 +92,47 @@ describe("getCryptids", () => {
       area: 1
     }];
 
+    // paginate のモックデータ
+    const mockPaginateResult = {
+      docs: mockData,
+      totalDocs: 1,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
     const req = mockReq({ name: "犬" });
     const res = mockRes();
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(mockData),
-    });
-
+    Cryptid.paginate.mockResolvedValue(mockPaginateResult);
+    
     await getCryptids(req, res, mockNext);
 
-    expect(Cryptid.find).toHaveBeenCalledWith({
-      $or: [
-        { name: { $regex: "犬", $options: "i" } },
-        { alias: { $regex: "犬", $options: "i" } }
-      ]
-    });
+    expect(Cryptid.paginate).toHaveBeenCalledWith(
+      {
+        $or: [
+          { name: { $regex: "犬", $options: "i" } },
+          { alias: { $regex: "犬", $options: "i" } }
+        ]
+      },
+      {
+        page: 1,
+        limit: 10,
+        sort: { createdAt: -1 }
+      }
+    );
     
-    expect(res.json).toHaveBeenCalledWith(mockData);
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData,
+      pagination: {
+        totalDocs: 1,
+        totalPages: 1,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    });
     expect(mockNext).not.toHaveBeenCalled();
   });
 
@@ -120,19 +143,44 @@ describe("getCryptids", () => {
       area: 2
     }];
 
+    // paginate のモックデータ
+    const mockPaginateResult = {
+      docs: mockData,
+      totalDocs: 1,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
     const req = mockReq({ size: "L" });
     const res = mockRes();
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(mockData),
-    });
-
+    Cryptid.paginate.mockResolvedValue(mockPaginateResult);
+    
     await getCryptids(req, res, mockNext);
 
-    expect(Cryptid.find).toHaveBeenCalledWith({ size: "L" });
-    expect(res.json).toHaveBeenCalledWith(mockData);
+    expect(Cryptid.paginate).toHaveBeenCalledWith(
+      {
+        size: "L"
+      },
+      {
+        page: 1,
+        limit: 10,
+        sort: { createdAt: -1 }
+      }
+    );
+
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData,
+      pagination: {
+        totalDocs: 1,
+        totalPages: 1,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    });
     expect(mockNext).not.toHaveBeenCalled();
   });
 
@@ -143,19 +191,44 @@ describe("getCryptids", () => {
       area: 3
     }];
 
+    // paginate のモックデータ
+    const mockPaginateResult = {
+      docs: mockData,
+      totalDocs: 1,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
     const req = mockReq({ area: 3 });
     const res = mockRes();
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(mockData),
-    });
-
+    Cryptid.paginate.mockResolvedValue(mockPaginateResult);
+    
     await getCryptids(req, res, mockNext);
 
-    expect(Cryptid.find).toHaveBeenCalledWith({ area: 3 });
-    expect(res.json).toHaveBeenCalledWith(mockData);
+    expect(Cryptid.paginate).toHaveBeenCalledWith(
+      {
+        area: 3
+      },
+      {
+        page: 1,
+        limit: 10,
+        sort: { createdAt: -1 }
+      }
+    );
+
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData,
+      pagination: {
+        totalDocs: 1,
+        totalPages: 1,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    });
     expect(mockNext).not.toHaveBeenCalled();
   });
 
@@ -175,21 +248,43 @@ describe("getCryptids", () => {
       }
     ];
 
-    const req = mockReq({});
+    const mockPaginateResult = {
+      docs: mockData,
+      totalDocs: 2,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
+    const req = mockReq({sort: ""});
     const res = mockRes();
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(mockData),
-    });
+    Cryptid.paginate.mockResolvedValue(mockPaginateResult);
 
     await getCryptids(req, res, mockNext);
 
-    // Cryptid.findの呼び出しで、updatedAtの降順（-1）でソートされているかを確認
-    expect(Cryptid.find().sort).toHaveBeenCalledWith({ updatedAt: -1 });  // 降順確認
+    // 引数が正しいか確認
+    expect(Cryptid.paginate).toHaveBeenCalledWith(
+      {},
+      {
+        page: 1,
+        limit: 10,
+        sort: { updatedAt: -1 }, // updatedAtの降順（-1）が指定されているか確認
+      }
+    );
 
-    expect(res.json).toHaveBeenCalledWith(mockData);
+    // レスポンスが正しいか確認
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData,
+      pagination: {
+        totalDocs: 2,
+        totalPages: 1,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    });
     expect(mockNext).not.toHaveBeenCalled();
   });
 
@@ -198,7 +293,6 @@ describe("getCryptids", () => {
   ?sort=-name → name の降順 (Z → A)
   ?sort=name → name の昇順 (A → Z)
   */
-
   test("sortが降順で指定されている場合、降順でソートされる", async () => {
     const mockData = [
       {
@@ -215,21 +309,44 @@ describe("getCryptids", () => {
       }
     ];
 
+    const mockPaginateResult = {
+      docs: mockData,
+      totalDocs: 2,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
     const req = mockReq({sort: "-createdAt"});
     const res = mockRes();
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(mockData),
-    });
+    Cryptid.paginate.mockResolvedValue(mockPaginateResult);
 
     await getCryptids(req, res, mockNext);
 
-    // Cryptid.findの呼び出しで、降順（-1）でソートされているかを確認
-    expect(Cryptid.find().sort).toHaveBeenCalledWith({ createdAt: -1 });
+    // 引数が正しいか確認
+    expect(Cryptid.paginate).toHaveBeenCalledWith(
+      {},
+      {
+        page: 1,
+        limit: 10,
+        sort: { createdAt: -1 }, // 降順（-1）が指定されているか確認
+      }
+    );
   
-    expect(res.json).toHaveBeenCalledWith(mockData);
+    // レスポンスが正しいか確認
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData,
+      pagination: {
+        totalDocs: 2,
+        totalPages: 1,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    });
+
     expect(mockNext).not.toHaveBeenCalled();
   });
 
@@ -249,73 +366,146 @@ describe("getCryptids", () => {
       }
     ];
 
+    const mockPaginateResult = {
+      docs: mockData,
+      totalDocs: 2,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
     const req = mockReq({sort: "createdAt"});
     const res = mockRes();
 
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(mockData),
-    });
+    Cryptid.paginate.mockResolvedValue(mockPaginateResult);
 
     await getCryptids(req, res, mockNext);
 
-    // Cryptid.findの呼び出しで、昇順（1）でソートされているかを確認
-    expect(Cryptid.find().sort).toHaveBeenCalledWith({ createdAt: 1 });
+    // 引数が正しいか確認
+    expect(Cryptid.paginate).toHaveBeenCalledWith(
+      {},
+      {
+        page: 1,
+        limit: 10,
+        sort: { createdAt: 1 }, // 昇順（1）が指定されているか確認
+      }
+    );
   
-    expect(res.json).toHaveBeenCalledWith(mockData);
+    // レスポンスが正しいか確認
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData,
+      pagination: {
+        totalDocs: 2,
+        totalPages: 1,
+        currentPage: 1,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    });
+
     expect(mockNext).not.toHaveBeenCalled();
   });
 
   test("limit指定なしの場合、最大10件取得される", async () => {
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(new Array(10)), // 10件のデータを返す
-    });
+    const mockData = {
+      docs: new Array(10).fill({ name: "test" }), // 10件のダミーデータ
+      totalDocs: 10,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
   
+    Cryptid.paginate = jest.fn().mockResolvedValue(mockData);
+
     const req = { query: {} }; // limit指定なし
     const res = { json: jest.fn() };
   
     await getCryptids(req, res);
-  
-    expect(Cryptid.find().limit).toHaveBeenCalledWith(10);
-    expect(res.json).toHaveBeenCalledWith(expect.any(Array));
-    expect(res.json.mock.calls[0][0]).toHaveLength(10);
+
+    // paginate が limit: 10 で呼ばれたことを確認
+    expect(Cryptid.paginate).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ limit: 10 }));
+
+    // 正しいレスポンスが返っているか確認
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData.docs,
+      pagination: {
+        totalDocs: mockData.totalDocs,
+        totalPages: mockData.totalPages,
+        currentPage: mockData.page,
+        hasNextPage: mockData.hasNextPage,
+        hasPrevPage: mockData.hasPrevPage,
+      },
+    });
   });
   
   test("limit=5 を指定した場合、5件取得される", async () => {
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(new Array(5)), // 5件のデータを返す
-    });
+    const mockData = {
+      docs: new Array(5).fill({ name: "test" }), // 5件のダミーデータ
+      totalDocs: 5,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
   
+    Cryptid.paginate = jest.fn().mockResolvedValue(mockData);
+
     const req = { query: { limit: "5" } };
     const res = { json: jest.fn() };
   
     await getCryptids(req, res);
   
-    expect(Cryptid.find().limit).toHaveBeenCalledWith(5);
-    expect(res.json).toHaveBeenCalledWith(expect.any(Array));
-    expect(res.json.mock.calls[0][0]).toHaveLength(5);
+    // paginate が limit: 5 で呼ばれたことを確認
+    expect(Cryptid.paginate).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ limit: 5 }));
+
+    // 正しいレスポンスが返っているか確認
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData.docs,
+      pagination: {
+        totalDocs: mockData.totalDocs,
+        totalPages: mockData.totalPages,
+        currentPage: mockData.page,
+        hasNextPage: mockData.hasNextPage,
+        hasPrevPage: mockData.hasPrevPage,
+      },
+    });
+
   });
   
-  test("limit=101 を指定した場合、MAX値である最大100件取得される", async () => {
-    Cryptid.find.mockReturnValue({
-      sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockResolvedValue(new Array(100)), // 100件のデータを返す
-    });
+  test("limit=21 を指定した場合、MAX値である最大20件取得される", async () => {
+    const mockData = {
+      docs: new Array(20).fill({ name: "test" }), // 20件のダミーデータ
+      totalDocs: 20,
+      totalPages: 1,
+      page: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    };
+
+    Cryptid.paginate = jest.fn().mockResolvedValue(mockData);
   
-    const req = { query: { limit: "101" } };
+    const req = { query: { limit: "21" } };
     const res = { json: jest.fn() };
   
     await getCryptids(req, res);
-  
-    expect(Cryptid.find().limit).toHaveBeenCalledWith(100);
-    expect(res.json).toHaveBeenCalledWith(expect.any(Array));
-    expect(res.json.mock.calls[0][0]).toHaveLength(100);
+
+    // paginate が limit: 20 で呼ばれたことを確認
+    expect(Cryptid.paginate).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ limit: 20 }));
+
+    // 正しいレスポンスが返っているか確認
+    expect(res.json).toHaveBeenCalledWith({
+      cryptids: mockData.docs,
+      pagination: {
+        totalDocs: mockData.totalDocs,
+        totalPages: mockData.totalPages,
+        currentPage: mockData.page,
+        hasNextPage: mockData.hasNextPage,
+        hasPrevPage: mockData.hasPrevPage,
+      },
+    });
+
   });
   
 });

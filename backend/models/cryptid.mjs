@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const cryptidSchema = new Schema(
   {
@@ -88,5 +89,7 @@ const cryptidSchema = new Schema(
   },
   { timestamps: true } 
 );
+
+cryptidSchema.plugin(mongoosePaginate);
 
 export const Cryptid = model("Cryptid", cryptidSchema);

@@ -1,7 +1,7 @@
 import BaseButton from "./BaseButton";
 import { useTheme } from "styled-components";
 
-const ButtonPrimary = ({children, onClick}) => {
+const ButtonPrimary = ({children, onClick, disabled}) => {
   const theme = useTheme();
   return (
     <BaseButton
@@ -9,6 +9,7 @@ const ButtonPrimary = ({children, onClick}) => {
       $bgColor={theme.colors.quaternary}
       $borderColor={theme.colors.primary}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </BaseButton>
