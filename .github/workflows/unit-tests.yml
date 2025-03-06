@@ -37,4 +37,4 @@ jobs:
   
         - name: backendディレクトリのみをVPSへデプロイ
           run: |
-            rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./backend/ root@${{ secrets.VPS_HOST }}:/UMA-DB/backend/ --progress
+            rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./backend/ root@${{ secrets.VPS_HOST }}:UMA-DB/backend/ --progress
