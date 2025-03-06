@@ -3,12 +3,11 @@ import breakpoints from "../styles/breakpoints";
 
 const StyledCardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* デフォルトは2列 */
   gap: 1rem;
   padding: 1rem;
 
   @media (min-width: ${breakpoints.sp}) {
-    grid-template-columns: repeat(2, 1fr); /* 2列 */
+    //grid-template-columns: repeat(2, 1fr); /* 2列 */
   }
 
   @media (min-width: ${breakpoints.tablet}) {
