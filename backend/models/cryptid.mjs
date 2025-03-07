@@ -33,6 +33,11 @@ const cryptidSchema = new Schema(
       required: true,
       min: 1,
     },
+    species_type: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
     credibility: {
       type: Number,
       required: true,
