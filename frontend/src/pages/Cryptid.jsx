@@ -18,6 +18,7 @@ import imageConfig from "../config/imageConfig";
 import ImageModal from "../components/ImageModal";
 import {Video, VideoContainer} from "../components/videos";
 import {Link} from "react-router-dom";
+import {AREA,SPECIES_TYPE} from "../constants";
 
 const Cryptid = () => {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -92,6 +93,14 @@ const Cryptid = () => {
                 <ProfileText>{cryptid.alias}</ProfileText>
               </ProfileItem>
               <ProfileItem>
+                <ProfileLabel>生物分類</ProfileLabel>
+                <ProfileText>{SPECIES_TYPE.find((a) => a.id === cryptid.species_type)?.alt || "不明"}</ProfileText>
+              </ProfileItem>
+              <ProfileItem>
+                <ProfileLabel>エリア</ProfileLabel>
+                <ProfileText>{AREA.find((a) => a.id === cryptid.area)?.alt || "不明"}</ProfileText>
+              </ProfileItem>
+              <ProfileItem>
                 <ProfileLabel>サイズ</ProfileLabel>
                 <ProfileText>{cryptid.size} （{cryptid.size_details}）</ProfileText>
               </ProfileItem>
@@ -100,7 +109,7 @@ const Cryptid = () => {
                 <ProfileText>{cryptid.main_sighting_location}</ProfileText>
               </ProfileItem>
               <ProfileItem>
-                <ProfileLabel>最初の目撃</ProfileLabel>
+                <ProfileLabel>最初の目撃報告</ProfileLabel>
                 <ProfileText>{cryptid.first_sighting}</ProfileText>
               </ProfileItem>
               <ProfileItem>
