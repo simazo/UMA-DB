@@ -13,8 +13,24 @@
 
 .profile-column {
   display: flex;
-  //gap: 20px;
   width: 100%;
+  flex-direction: column;
+
+  @include responsive.responsive(sp) {
+    flex-direction: column;
+  }
+
+  @include responsive.responsive(tablet) {
+    flex-direction: column;
+  }
+
+  @include responsive.responsive(pc) {
+    flex-direction: row;
+  }
+
+  @include responsive.responsive(wide-pc) {
+    flex-direction: row;
+  }
 }
 
 .left-column{
@@ -22,16 +38,17 @@
   flex-direction: column;
   gap: 10px;
   flex: 7; // 左カラムを全体の70%幅に
-  //max-width: 70%
-
   max-width: 200px; // 大きい画像の最大幅(小さい画像の横幅と合わせる)
+  max-width: 100%;
+  margin-bottom: 20px;
+  align-items: center;
 
   @include responsive.responsive(sp) {
-    max-width: 200px;
+    max-width: 100%;
   }
 
   @include responsive.responsive(tablet) {
-    max-width: 300px;
+    max-width: 100%;
   }
 
   @include responsive.responsive(pc) {
@@ -71,20 +88,16 @@
 .profile-item {
   display: flex;
   flex-direction: column;
-  padding: 4px 16px;
-  margin-left: 20px;
+  //padding: 4px 16px;
+  //margin-left: 20px;
   margin-bottom: 20px;
 
   @include responsive.responsive(pc) {
-    //flex-direction: row;
-    //align-items: center;
     gap: 10px;
     margin-left: 40px;
   }
   
   @include responsive.responsive(wide-pc) {
-    //flex-direction: row;
-    //align-items: center;
     gap: 20px;
     margin-left: 60px;
   }

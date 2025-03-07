@@ -14,20 +14,37 @@ export const ProfileContainer = styled.div`
 export const ProfileColumn = styled.div`
   display: flex;
   width: 100%;
+  flex-direction: column;
+
+  @media (min-width: ${breakpoints.sp}) {
+    flex-direction: column;
+  }
+  @media (min-width: ${breakpoints.tablet}) {
+    flex-direction: column;
+  }
+  @media (min-width: ${breakpoints.pc}) {
+    flex-direction: row;
+  }
+  @media (min-width: ${breakpoints.wide}) {
+    flex-direction: row;
+  }
 `;
 
 export const LeftColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   flex: 7;
   max-width: 200px;
+  max-width: 100%;
+  margin-bottom: 20px;
+  align-items: center;
 
   @media (min-width: ${breakpoints.sp}) {
-    max-width: 200px;
+    max-width: 100%;
   }
   @media (min-width: ${breakpoints.tablet}) {
-    max-width: 300px;
+    max-width: 100%;
   }
   @media (min-width: ${breakpoints.pc}) {
     max-width: 400px;
@@ -71,7 +88,19 @@ export const RightColumn = styled.div`
   flex: 3;
   align-items: flex-start;
   justify-content: center;
-  margin-left: 20px;
+`;
+
+export const ProfileItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  @media (min-width: ${breakpoints.sp}) {
+    
+  }
+  @media (min-width: ${breakpoints.tablet}) {
+    
+  }
   @media (min-width: ${breakpoints.pc}) {
     gap: 10px;
     margin-left: 40px;
@@ -80,13 +109,6 @@ export const RightColumn = styled.div`
     gap: 20px;
     margin-left: 60px;
   }
-`;
-
-export const ProfileItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 4px 16px;
-  margin-bottom: 20px;
 `;
 
 export const ProfileLabel = styled.label`
