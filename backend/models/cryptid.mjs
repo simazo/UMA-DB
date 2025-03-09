@@ -3,6 +3,9 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const cryptidSchema = new Schema(
   {
+    _id: {
+      type: String,
+    },
     id: {
       type: Number, // 画像フォルダの番号（事前に画像作成時に手動採番）
       required: true,
