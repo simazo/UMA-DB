@@ -99,7 +99,7 @@ const CryptidList = () => {
         <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">
           {cryptids.length === 0
             ? "見つかりませんでした"
-            : `${cryptids.length}件のUMAが見つかりました`
+            : `${pagination.totalDocs}件のUMAが見つかりました`
           }
         </TextWithIcon>
         </HeadSecondary>
