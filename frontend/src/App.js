@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Home, CryptidList, Cryptid } from "./pages";
 import { Header, Footer } from "./components/layouts";
 import { PageContainer } from "./components/layouts";
+import ScrollToTop from './common/ScrollToTop'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <GlobalStyle />
         <Header />
         <PageContainer>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cryptids" element={<CryptidList />} />
