@@ -11,11 +11,12 @@ import imageConfig from "../config/imageConfig";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [searchNameText, setSearchNameText] = useState("");
-  const [isComposing, setIsComposing] = useState(false);
+  const [ searchNameText, setSearchNameText ] = useState("");
+  const [ isComposing, setIsComposing ] = useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const [ latestCryptids, setLatestCryptids ] = useState([]); 
+  const [ latestCryptids, setLatestCryptids ] = useState([]);
+  const [ count, setCount ] = useState([null]);
   const [ error, setError ] = useState(null);
   const imageUrl = imageConfig.imageUrl;
 
@@ -42,14 +43,11 @@ const Home = () => {
   useEffect(() => {
     const fetchLatestCryptids = async () => {
       try {
-
         //最新10件
         const response = await fetch(`${API_BASE_URL}/cryptids?limit=4&sort=-createdAt`);
-
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         const data = await response.json();
         setLatestCryptids(data.cryptids);
       } catch (error) {
@@ -58,7 +56,21 @@ const Home = () => {
       }
     };
 
+    const fetchDataCount = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/cryptids/count`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setCount(data.count); // データ件数の状態更新
+      } catch (error) {
+        console.error("Error fetching data count:", error);
+      }
+    };
+
     fetchLatestCryptids();
+    fetchDataCount();
   }, []);
 
   return (
@@ -67,7 +79,7 @@ const Home = () => {
         <HeadPrimary>UMA-DB</HeadPrimary>
       </Section>
       <Section>
-        <h4>世界中のUMA情報を集めたデータベース</h4>
+        <h4>世界中のUMA情報を集めたデータベース 【現在:<span style={{ fontSize: "120%" }}>{count}</span>件】</h4>
       </Section>
       <Section>
         {error ? <p style={{ color: "red" }}>{error}</p> : null}
