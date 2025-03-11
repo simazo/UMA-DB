@@ -2,18 +2,14 @@ import styled from "styled-components";
 import breakpoints from "../styles/breakpoints";
 
 const Video = styled.div`
-  flex: 1 1 calc(50% - 16px);
-  max-width: calc(50% - 16px);
+  flex: 1 1 100%; // sp〜tableでは1列
+  max-width: 100%;
+
   aspect-ratio: 16 / 9;
   position: relative;
 
-  @media (min-width: ${breakpoints.sp}) {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-
-  @media (min-width: ${breakpoints.tablet}) {
-    flex: 1 1 calc(50% - 16px);
+  @media (min-width: ${breakpoints.pc}) {
+    flex: 1 1 calc(50% - 16px); // pc〜からは2列
     max-width: calc(50% - 16px);
   }
 
