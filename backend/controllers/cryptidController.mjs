@@ -48,22 +48,37 @@ export const getCryptids = async (req, res, next) => {
 };
 
 export const getCryptidById = async (req, res, next) => {
-  const cryptid = await Cryptid.findById(req.params.id);
+  try {
+    const cryptid = await Cryptid.findById(req.params.id);
   
-  if (cryptid === null) {
-    const error = new Error("Cryptid Not Found");
-    error.status = 404;
-    return next(error);
+    if (cryptid === null) {
+      const error = new Error("Cryptid Not Found");
+      error.status = 404;
+      return next(error);
+    }
+  
+    // 関連するUMAのデータを_idとnameだけ取得
+    const relatedUMAs = await Cryptid.find(
+      { id: { $in: cryptid.related_uma } }, 
+      "_id name"
+    ) || [];
+  
+    // console.log("--relatedUMAs--");
+    // console.log(relatedUMAs);
+  
+    res.json({ ...cryptid.toObject(), related_uma: relatedUMAs });
+  } catch(error) {
+    console.log(`Error occurred:${error}`);
+    next(error);
   }
+};
 
-  // 関連するUMAのデータを_idとnameだけ取得
-  const relatedUMAs = await Cryptid.find(
-    { id: { $in: cryptid.related_uma } }, 
-    "_id name"
-  ) || [];
-
-  // console.log("--relatedUMAs--");
-  // console.log(relatedUMAs);
-
-  res.json({ ...cryptid.toObject(), related_uma: relatedUMAs });
+export const getCryptidCount = async (req, res, next) => {
+  try {
+    const count = await Cryptid.countDocuments();
+    res.json({ count });
+  } catch (error) {
+    console.log(`Error occurred:${error}`);
+    next(error);
+  }
 };
