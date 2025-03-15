@@ -101,7 +101,7 @@ const Home = () => {
       </Section>
       <Section>
         <HeadSecondary>
-          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">目撃エリアから探す</TextWithIcon>
+          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">生息場所から探す</TextWithIcon>
         </HeadSecondary>
         <ButtonContainer>
           {AREA.map(({ id, icon, alt }) => (

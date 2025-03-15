@@ -38,7 +38,7 @@ const CryptidList = () => {
 
   // フィルターの表示用情報
   const filterCategory = queryParams.area
-    ? "目撃エリア"
+    ? "生息場所"
     : queryParams.size
     ? "サイズ"
     : queryParams.name
