@@ -16,9 +16,9 @@ import {
 } from "../components/layouts/ProfileContainer";
 import imageConfig from "../config/imageConfig";
 import ImageModal from "../components/ImageModal";
-import {Video, VideoContainer} from "../components/videos";
-import {Link} from "react-router-dom";
-import {AREA,SPECIES_TYPE} from "../constants";
+import { Video, VideoContainer } from "../components/videos";
+import { Link } from "react-router-dom";
+import { AREA,SPECIES_TYPE,REGION } from "../constants";
 
 const Cryptid = () => {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -97,8 +97,12 @@ const Cryptid = () => {
                 <ProfileText>{SPECIES_TYPE.find((a) => a.id === cryptid.species_type)?.alt || "不明"}</ProfileText>
               </ProfileItem>
               <ProfileItem>
-                <ProfileLabel>エリア</ProfileLabel>
+                <ProfileLabel>生息場所</ProfileLabel>
                 <ProfileText>{AREA.find((a) => a.id === cryptid.area)?.alt || "不明"}</ProfileText>
+              </ProfileItem>
+              <ProfileItem>
+                <ProfileLabel>生息地域</ProfileLabel>
+                <ProfileText>{REGION.find((a) => a.id === cryptid.region)?.alt || "不明"}</ProfileText>
               </ProfileItem>
               <ProfileItem>
                 <ProfileLabel>サイズ</ProfileLabel>
