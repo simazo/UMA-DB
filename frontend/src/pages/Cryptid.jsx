@@ -18,7 +18,7 @@ import imageConfig from "../config/imageConfig";
 import ImageModal from "../components/ImageModal";
 import { Video, VideoContainer } from "../components/videos";
 import { Link } from "react-router-dom";
-import { AREA,SPECIES_TYPE,REGION } from "../constants";
+import { AREA, SPECIES_TYPE, REGION, UMA_TYPE } from "../constants";
 
 const Cryptid = () => {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -93,8 +93,12 @@ const Cryptid = () => {
                 <ProfileText>{cryptid.alias}</ProfileText>
               </ProfileItem>
               <ProfileItem>
-                <ProfileLabel>生物分類</ProfileLabel>
+                <ProfileLabel>生物学的分類</ProfileLabel>
                 <ProfileText>{SPECIES_TYPE.find((a) => a.id === cryptid.species_type)?.alt || "不明"}</ProfileText>
+              </ProfileItem>
+              <ProfileItem>
+                <ProfileLabel>UMA的分類</ProfileLabel>
+                <ProfileText>{UMA_TYPE.find((a) => a.id === cryptid.uma_type)?.alt || "不明"}</ProfileText>
               </ProfileItem>
               <ProfileItem>
                 <ProfileLabel>生息場所</ProfileLabel>
