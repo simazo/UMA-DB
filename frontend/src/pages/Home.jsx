@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { AREA, SIZE, REGION } from "../constants";
+import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
 import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
 import { Card, CardContainer} from "../components/cards";
@@ -19,6 +19,11 @@ const Home = () => {
   const [ count, setCount ] = useState([null]);
   const [ error, setError ] = useState(null);
   const imageUrl = imageConfig.imageUrl;
+
+  // UMA的分類ボタンクリック
+  const handleUmaTypeButtonClick = (uma_type) => {
+    navigate(`/cryptids?uma_type=${uma_type}`);
+  };
 
   // 地域ボタンクリック
   const handleRegionButtonClick = (region) => {
@@ -150,6 +155,18 @@ const Home = () => {
         <ButtonContainer>
           {REGION.map(({ id, icon, alt }) => (
             <ButtonWithIcon key={id} onClick={() => handleRegionButtonClick(id)} iconSrc={icon} alt={alt}>
+              {alt}
+            </ButtonWithIcon>
+          ))}
+        </ButtonContainer>
+      </Section>
+      <Section>
+        <HeadSecondary>
+          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">UMA的分類から探す</TextWithIcon>
+        </HeadSecondary>
+        <ButtonContainer>
+          {UMA_TYPE.map(({ id, icon, alt }) => (
+            <ButtonWithIcon key={id} onClick={() => handleUmaTypeButtonClick(id)} iconSrc={icon} alt={alt}>
               {alt}
             </ButtonWithIcon>
           ))}

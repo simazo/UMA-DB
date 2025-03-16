@@ -1,7 +1,7 @@
 import { Cryptid } from "../models/cryptid.mjs";
 
 export const getCryptids = async (req, res, next) => {
-  const { size, area, name, region, limit = 10, page = 1, sort = '-createdAt' } = req.query;
+  const { size, area, name, region, uma_type, limit = 10, page = 1, sort = '-createdAt' } = req.query;
   //console.log('Request URL:', req.originalUrl);
 
   try {
@@ -21,6 +21,9 @@ export const getCryptids = async (req, res, next) => {
     }
     if (region) {
       query.region = Number(region);
+    }
+    if (uma_type) {
+      query.uma_type = Number(uma_type);
     }
     const options = {
       page: parseInt(page) || 1,
