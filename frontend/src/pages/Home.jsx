@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { AREA, SIZE } from "../constants";
+import { AREA, SIZE, REGION } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
 import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
 import { Card, CardContainer} from "../components/cards";
@@ -19,6 +19,11 @@ const Home = () => {
   const [ count, setCount ] = useState([null]);
   const [ error, setError ] = useState(null);
   const imageUrl = imageConfig.imageUrl;
+
+  // 地域ボタンクリック
+  const handleRegionButtonClick = (region) => {
+    navigate(`/cryptids?region=${region}`);
+  };
 
   // エリアボタンクリック
   const handleAreaButtonClick = (area) => {
@@ -137,6 +142,18 @@ const Home = () => {
             onCompositionEnd={() => setIsComposing(false)}
           />
         </PaddingBox>
+      </Section>
+      <Section>
+        <HeadSecondary>
+          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">生息地域から探す</TextWithIcon>
+        </HeadSecondary>
+        <ButtonContainer>
+          {REGION.map(({ id, icon, alt }) => (
+            <ButtonWithIcon key={id} onClick={() => handleRegionButtonClick(id)} iconSrc={icon} alt={alt}>
+              {alt}
+            </ButtonWithIcon>
+          ))}
+        </ButtonContainer>
       </Section>
     </>
   );

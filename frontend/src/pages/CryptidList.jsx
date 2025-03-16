@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Section, PaddingBox } from "../components/layouts";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
-import { AREA, SIZE } from "../constants";
+import { AREA, SIZE, REGION } from "../constants";
 import { Card, CardContainer } from "../components/cards";
 import TextWithIcon from "../components/TextWithIcon";
 import imageConfig from "../config/imageConfig";
@@ -28,7 +28,7 @@ const CryptidList = () => {
   
   // クエリパラメータの取得
   const queryParams = {};
-  ["area", "size", "name", "sort", "limit", "page"].forEach((key) => {
+  ["area", "size", "name", "region", "sort", "limit", "page"].forEach((key) => {
     const value = params.get(key);
     if (value) queryParams[key] = value;
   });
@@ -39,6 +39,8 @@ const CryptidList = () => {
   // フィルターの表示用情報
   const filterCategory = queryParams.area
     ? "生息場所"
+    : queryParams.region 
+    ? "生息地域"
     : queryParams.size
     ? "サイズ"
     : queryParams.name
@@ -46,7 +48,9 @@ const CryptidList = () => {
     : "";
 
   const filterValue = queryParams.area
-    ? AREA.find((a) => a.id === Number(queryParams.area))?.alt || "不明なエリア"
+    ? AREA.find((a) => a.id === Number(queryParams.area))?.alt || "不明な生息場所"
+    : queryParams.region
+    ? REGION.find((r) => r.id === Number(queryParams.region))?.alt || "不明な生息地域"
     : queryParams.size
     ? SIZE.find((s) => s.id === queryParams.size)?.alt || "不明なサイズ"
     : queryParams.name

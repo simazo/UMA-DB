@@ -1,7 +1,7 @@
 import { Cryptid } from "../models/cryptid.mjs";
 
 export const getCryptids = async (req, res, next) => {
-  const { size, area, name, limit = 10, page = 1, sort = '-createdAt' } = req.query;
+  const { size, area, name, region, limit = 10, page = 1, sort = '-createdAt' } = req.query;
   //console.log('Request URL:', req.originalUrl);
 
   try {
@@ -19,7 +19,9 @@ export const getCryptids = async (req, res, next) => {
     if (area) {
       query.area = Number(area);
     }
-
+    if (region) {
+      query.region = Number(region);
+    }
     const options = {
       page: parseInt(page) || 1,
       limit: Math.min(parseInt(limit) || 10, 20), // 最大20件まで
