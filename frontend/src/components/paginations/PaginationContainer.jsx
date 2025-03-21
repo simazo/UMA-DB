@@ -3,17 +3,13 @@ import breakpoints from "../styles/breakpoints";
 
 const StyledPaginationContainer = styled.div `
   display: flex;
+  flex-direction: column;
+  align-items: center; 
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  font-size: 0.75rem;
-
-  @media (min-width: ${breakpoints.sp}) {
-    font-size: 0.75rem;
-    padding: 0.5rem 0.75rem;
-  }
+  font-size: 1.2rem;
 
   @media (min-width: ${breakpoints.tablet}) {
+    flex-direction: row;
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
   }
