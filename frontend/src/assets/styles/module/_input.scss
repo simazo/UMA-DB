@@ -1,6 +1,0 @@
-@use '../setting/color';
-@use '../mixin' as mixin;
-
-.input-text {
-  @include mixin.base-input(#ffffff, color.$primary-color, color.$primary-color, color.$secondary-color);
-}
