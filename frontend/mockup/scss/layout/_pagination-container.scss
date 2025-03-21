@@ -2,22 +2,18 @@
 
 .pagination-container {
   display: flex;
+  flex-direction: column;
+  align-items: center; 
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  font-size: 0.75rem;
-
+  font-size: 1.2rem;
+  
   .pagination-info {
-    padding-top: 1rem;
+    padding: 1rem;
     margin: 0 1rem;
   }
 
-  @include responsive.responsive(sp) {
-    font-size: 0.75rem;
-    padding: 0.5rem 0.75rem;
-  }
-
   @include responsive.responsive(tablet) {
+    flex-direction: row;
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
   }
