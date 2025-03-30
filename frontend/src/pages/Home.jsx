@@ -8,6 +8,7 @@ import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import { InputText } from "../components/inputs";
 import TextWithIcon from "../components/TextWithIcon";
 import imageConfig from "../config/imageConfig";
+import useCryptidData from "../components/hooks/useCryptidData";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,9 +16,7 @@ const Home = () => {
   const [ isComposing, setIsComposing ] = useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const [ latestCryptids, setLatestCryptids ] = useState([]);
-  const [ count, setCount ] = useState([null]);
-  const [ error, setError ] = useState(null);
+  const { latestCryptids, count, error } = useCryptidData(process.env.REACT_APP_API_BASE_URL);
   const imageUrl = imageConfig.imageUrl;
 
   // UMA的分類ボタンクリック
@@ -49,39 +48,6 @@ const Home = () => {
       navigate(`/cryptids?name=${encodeURIComponent(searchNameText)}`);
     }
   }
-
-  useEffect(() => {
-    const fetchLatestCryptids = async () => {
-      try {
-        //最新10件
-        const response = await fetch(`${API_BASE_URL}/cryptids?limit=4&sort=-createdAt`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setLatestCryptids(data.cryptids);
-      } catch (error) {
-        console.error("Error fetching latest cryptids:", error);
-        setError("データの取得に失敗しました。");
-      }
-    };
-
-    const fetchDataCount = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/cryptids/count`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCount(data.count); // データ件数の状態更新
-      } catch (error) {
-        console.error("Error fetching data count:", error);
-      }
-    };
-
-    fetchLatestCryptids();
-    fetchDataCount();
-  }, []);
 
   return (
     <>
