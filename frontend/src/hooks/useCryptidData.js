@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import axios from "axios";
 
 const useCryptidData = (API_BASE_URL) => {
   const [ latestCryptids, setLatestCryptids ] = useState([]);
@@ -9,12 +9,8 @@ const useCryptidData = (API_BASE_URL) => {
   useEffect(() => {
     const fetchLatestCryptids = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/cryptids?limit=4&sort=-createdAt`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setLatestCryptids(data.cryptids);
+        const response = await axios.get(`${API_BASE_URL}/cryptids?limit=4&sort=-createdAt`);
+        setLatestCryptids(response.data.cryptids);
       } catch (error) {
         console.error("Error fetching latest cryptids:", error);
         setError("データの取得に失敗しました。");
@@ -23,12 +19,8 @@ const useCryptidData = (API_BASE_URL) => {
 
     const fetchDataCount = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/cryptids/count`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCount(data.count); // データ件数の状態更新
+        const response = await axios.get(`${API_BASE_URL}/cryptids/count`);
+        setCount(response.data.count);
       } catch (error) {
         console.error("Error fetching data count:", error);
       }
