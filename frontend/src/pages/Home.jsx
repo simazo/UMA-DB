@@ -5,15 +5,13 @@ import { Section, PaddingBox } from "../components/layouts";
 import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
 import { Card, CardContainer} from "../components/cards";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
-import { InputText } from "../components/inputs";
 import TextWithIcon from "../components/TextWithIcon";
 import imageConfig from "../config/imageConfig";
-import useCryptidData from "../components/hooks/useCryptidData";
+import useCryptidData from "../hooks/useCryptidData";
+import SearchBar from "../components/inputs/SearchBar";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [ searchNameText, setSearchNameText ] = useState("");
-  const [ isComposing, setIsComposing ] = useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const { latestCryptids, count, error } = useCryptidData(process.env.REACT_APP_API_BASE_URL);
@@ -38,16 +36,6 @@ const Home = () => {
   const handleSizeButtonClick = (size) => {
     navigate(`/cryptids?size=${size}`);
   };
-
-  // テキスト入力
-  const handleNameTextKeyDown = (event) => {
-    if (event.key !== "Enter") return;
-    event.preventDefault(); // フォーム送信させない
-    if (!searchNameText.trim()) return;
-    if (event.key === "Enter" && !isComposing) {
-      navigate(`/cryptids?name=${encodeURIComponent(searchNameText)}`);
-    }
-  }
 
   return (
     <>
@@ -104,14 +92,7 @@ const Home = () => {
           <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">名前から探す</TextWithIcon>
         </HeadSecondary>
         <PaddingBox>
-          <InputText 
-            placeholder="例：ネッシー"
-            value={searchNameText}
-            onChange={(e) => setSearchNameText(e.target.value)}
-            onKeyDown={handleNameTextKeyDown}
-            onCompositionStart={() => setIsComposing(true)}
-            onCompositionEnd={() => setIsComposing(false)}
-          />
+          <SearchBar />
         </PaddingBox>
       </Section>
       <Section>
