@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
