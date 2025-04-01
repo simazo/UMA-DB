@@ -2,19 +2,20 @@ import { useNavigate } from 'react-router-dom';
 import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
 import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
-import { Card, CardContainer} from "../components/cards";
+import { CardContainer, CryptidCard} from "../components/cards";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import TextWithIcon from "../components/TextWithIcon";
-import imageConfig from "../config/imageConfig";
-import useCryptidData from "../hooks/useCryptidData";
+
+import { useLatestCryptids, useCryptidCount } from "../hooks";
 import SearchBar from "../components/inputs/SearchBar";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const { latestCryptids, count, error } = useCryptidData(process.env.REACT_APP_API_BASE_URL);
-  const imageUrl = imageConfig.imageUrl;
+  const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids(process.env.REACT_APP_API_BASE_URL);
+  const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount(API_BASE_URL);
+
 
   // UMA的分類ボタンクリック
   const handleUmaTypeButtonClick = (uma_type) => {
@@ -42,24 +43,16 @@ const Home = () => {
         <HeadPrimary>UMA-DB</HeadPrimary>
       </Section>
       <Section>
-        <h4>世界中のUMA情報を集めたデータベース 【現在:<span style={{ fontSize: "120%" }}>{count}</span>件】</h4>
+        <h4>世界中のUMA情報を集めたデータベース 【現在:<span style={{ fontSize: "120%" }}>{cryptidCount}</span>件】</h4>
       </Section>
       <Section>
-        {error ? <p style={{ color: "red" }}>{error}</p> : null}
         <HeadSecondary>
           <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">最近追加されたUMA</TextWithIcon>
         </HeadSecondary>
         <CardContainer>
-          {latestCryptids.map((cryptid) => (
-            <Card
-              key={cryptid._id}
-              imageSrc={`${imageUrl}/${cryptid.id}/thumbnail.jpeg`}
-              title={cryptid.name}
-              description={`${cryptid.description.slice(0, 40)}...`}
-              isNew={true}
-              to={`/cryptids/${cryptid._id}`}
-              />
-          ))}
+          {cryptidsError && <p style={{ color: "red" }}>{cryptidsError}</p>}
+          {cryptidsLoading && <p>Loading...</p>}
+          {!cryptidsLoading && <CryptidCard cryptids={cryptids} />}
         </CardContainer>
       </Section>
       <Section>
