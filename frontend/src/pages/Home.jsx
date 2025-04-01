@@ -16,7 +16,6 @@ const Home = () => {
   const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids(process.env.REACT_APP_API_BASE_URL);
   const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount(API_BASE_URL);
 
-
   // UMA的分類ボタンクリック
   const handleUmaTypeButtonClick = (uma_type) => {
     navigate(`/cryptids?uma_type=${uma_type}`);
@@ -43,7 +42,14 @@ const Home = () => {
         <HeadPrimary>UMA-DB</HeadPrimary>
       </Section>
       <Section>
-        <h4>世界中のUMA情報を集めたデータベース 【現在:<span style={{ fontSize: "120%" }}>{cryptidCount}</span>件】</h4>
+        {countError && <p style={{ color: "red" }}>{countError}</p>}
+        {countLoading && <p>Loading...</p>}
+        {!countLoading && !countError && (
+          <h4>
+            世界中のUMA情報を集めたデータベース 【現在:{" "}
+            <span style={{ fontSize: "120%" }}>{cryptidCount}</span>件】
+          </h4>
+        )}
       </Section>
       <Section>
         <HeadSecondary>
