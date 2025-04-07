@@ -5,7 +5,7 @@ import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
 import { CardContainer, CryptidCard} from "../components/cards";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import TextWithIcon from "../components/TextWithIcon";
-
+import AsyncStateHandler from "../components/AsyncStateHandler";
 import { useLatestCryptids, useCryptidCount } from "../hooks";
 import SearchBar from "../components/inputs/SearchBar";
 
@@ -13,7 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids(process.env.REACT_APP_API_BASE_URL);
+  const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids(API_BASE_URL);
   const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount(API_BASE_URL);
 
   // UMA的分類ボタンクリック
@@ -42,23 +42,27 @@ const Home = () => {
         <HeadPrimary>UMA-DB</HeadPrimary>
       </Section>
       <Section>
-        {countError && <p style={{ color: "red" }}>{countError}</p>}
-        {countLoading && <p>Loading...</p>}
-        {!countLoading && !countError && (
-          <h4>
-            世界中のUMA情報を集めたデータベース 【現在:{" "}
-            <span style={{ fontSize: "120%" }}>{cryptidCount}</span>件】
-          </h4>
-        )}
+        <AsyncStateHandler
+          loading={countLoading}
+          error={countError}
+          render={() => (
+            <h4>
+              世界中のUMA情報を集めたデータベース 【現在:{" "}
+              <span style={{ fontSize: "120%" }}>{cryptidCount}</span>件】
+            </h4>
+          )}
+        />
       </Section>
       <Section>
         <HeadSecondary>
           <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">最近追加されたUMA</TextWithIcon>
         </HeadSecondary>
         <CardContainer>
-          {cryptidsError && <p style={{ color: "red" }}>{cryptidsError}</p>}
-          {cryptidsLoading && <p>Loading...</p>}
-          {!cryptidsLoading && <CryptidCard cryptids={cryptids} />}
+          <AsyncStateHandler
+            loading={cryptidsLoading}
+            error={cryptidsError}
+            render={() => (<CryptidCard cryptids={cryptids} />)}
+          />
         </CardContainer>
       </Section>
       <Section>

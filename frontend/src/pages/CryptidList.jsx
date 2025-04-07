@@ -8,6 +8,7 @@ import TextWithIcon from "../components/TextWithIcon";
 import { PaginationContainer, PaginationInfo } from "../components/paginations";
 import { ButtonWithIcon } from "../components/buttons";
 import useCryptids from "../hooks/useCryptids";
+import AsyncStateHandler from "../components/AsyncStateHandler";
 
 const CryptidList = () => {  
   const location = useLocation();
@@ -86,9 +87,11 @@ const CryptidList = () => {
         </TextWithIcon>
         </HeadSecondary>
         <CardContainer>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {loading && <p>Loading...</p>}
-          {!loading && <CryptidCard cryptids={cryptids} />}
+          <AsyncStateHandler
+            loading={loading}
+            error={error}
+            render={() => (<CryptidCard cryptids={cryptids} />)}
+          />
         </CardContainer>
       </Section>
       <Section>

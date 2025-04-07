@@ -20,13 +20,12 @@ import { Video, VideoContainer } from "../components/videos";
 import { Link } from "react-router-dom";
 import { AREA, SPECIES_TYPE, REGION, UMA_TYPE } from "../constants";
 import useCryptid from "../hooks/useCryptid";
+import AsyncStateHandler from "../components/AsyncStateHandler";
 
 const Cryptid = () => {
   const { id } = useParams();
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const { data: cryptid, error, loading } = useCryptid(API_BASE_URL, id);
-
-
   const imageUrl = imageConfig.imageUrl;
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
