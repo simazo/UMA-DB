@@ -11,6 +11,7 @@ const useFetchData = (url, transformData = (data) => data) => {
     try {
       const response = await axios.get(url);
       setData(transformData(response.data));
+      // console.log(response.data);
       setError(null);
     } catch (error) {
       console.error(`Error fetching data from ${url}:`, error);
@@ -21,6 +22,7 @@ const useFetchData = (url, transformData = (data) => data) => {
   };
 
   useEffect(() => {
+    // console.log(`useEffect called, url: ${url}`);
     fetchData();
   }, [url]);
 

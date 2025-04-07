@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Section, PaddingBox, CardContainer } from "../components/layouts";
+import { Section } from "../components/layouts";
 import { HeadPrimary } from "../components/heads/Heading";
 import {
   ProfileContainer,
@@ -19,11 +19,14 @@ import ImageModal from "../components/ImageModal";
 import { Video, VideoContainer } from "../components/videos";
 import { Link } from "react-router-dom";
 import { AREA, SPECIES_TYPE, REGION, UMA_TYPE } from "../constants";
+import useCryptid from "../hooks/useCryptid";
 
 const Cryptid = () => {
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const { id } = useParams();
-  const [ cryptid, setCryptid ] = useState(null);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const { data: cryptid, error, loading } = useCryptid(API_BASE_URL, id);
+
+
   const imageUrl = imageConfig.imageUrl;
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,19 +43,14 @@ const Cryptid = () => {
   };
   
   useEffect(() => {
-    if (!id) return;
-    fetch(`${API_BASE_URL}/cryptids/${id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setCryptid(data)
-      // cryptidが設定されたら初期画像を選択
-      setSelectedImage(`${imageUrl}/${data.id}/1.jpeg`);
-    });
-  }, [id]);
+    if (cryptid) {
+      setSelectedImage(`${imageUrl}/${cryptid.id}/1.jpeg`);
+    }
+  }, [cryptid]);
 
-  if (!cryptid) {
-    return <p>Loading...</p>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!cryptid) return <div>データが存在しません</div>;
 
   return (
     <>

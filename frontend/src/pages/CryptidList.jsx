@@ -64,7 +64,6 @@ const CryptidList = () => {
     navigate(`?${new URLSearchParams(queryParams).toString()}`); // URLが変わる
   };
 
-  
   return (
     <>
       <Section>
