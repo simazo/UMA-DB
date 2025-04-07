@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from "react";
+
 import { useLocation, useNavigate } from "react-router-dom";
-import { Section, PaddingBox } from "../components/layouts";
+import { Section } from "../components/layouts";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
-import { Card, CardContainer } from "../components/cards";
+import { CryptidCard, CardContainer } from "../components/cards";
 import TextWithIcon from "../components/TextWithIcon";
-import imageConfig from "../config/imageConfig";
 import { PaginationContainer, PaginationInfo } from "../components/paginations";
 import { ButtonWithIcon } from "../components/buttons";
+import useCryptids from "../hooks/useCryptids";
 
-const CryptidList = () => {
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const [ cryptids, setCryptids ] = useState([]);
-  const [ pagination, setPagination ] = useState({
-    totalDocs: 0,
-    totalPages: 1,
-    currentPage: 1,
-    hasNextPage: false,
-    hasPrevPage: false,
-  });  
-  const [ error, setError ] = useState(null);
-  const imageUrl = imageConfig.imageUrl;
-
+const CryptidList = () => {  
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
-  
-  // クエリパラメータの取得
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   const queryParams = {};
   ["area", "size", "name", "region", "uma_type", "sort", "limit", "page"].forEach((key) => {
     const value = params.get(key);
     if (value) queryParams[key] = value;
   });
+
+  if (!queryParams.page) {
+    queryParams.page = "1";
+  }
+
+  const { data, error, loading } = useCryptids(API_BASE_URL, queryParams);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  const { cryptids, pagination } = data;
 
   // page パラメータがない場合は 1 をセット
   const currentPage = parseInt(queryParams.page) || 1;
@@ -61,34 +58,13 @@ const CryptidList = () => {
     ? queryParams.name
     : "";
 
-  const fetchCryptids = async (page = 1) => {
-    try {
-      const queryString = new URLSearchParams(queryParams).toString();
-      const response = await fetch(`${API_BASE_URL}/cryptids?${queryString}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setCryptids(data.cryptids);
-      setPagination(data.pagination);
-    } catch (error) {
-      console.error("Error fetching cryptids:", error);
-      setError("データの取得に失敗しました。");
-    }
-  };
-
-  useEffect(() => {
-    fetchCryptids(pagination.currentPage);
-  }, [location.search]); // URLが変わる度に再実行
-
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > pagination.totalPages) return;
     queryParams.page = newPage;
     navigate(`?${new URLSearchParams(queryParams).toString()}`); // URLが変わる
   };
 
+  
   return (
     <>
       <Section>
@@ -102,7 +78,6 @@ const CryptidList = () => {
         </h4>
       </Section>
       <Section>
-        {error ? <p style={{ color: "red" }}>{error}</p> : null}
         <HeadSecondary>
         <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">
           {cryptids.length === 0
@@ -112,15 +87,9 @@ const CryptidList = () => {
         </TextWithIcon>
         </HeadSecondary>
         <CardContainer>
-          {cryptids.map((cryptid) => (
-            <Card
-              key={cryptid._id}
-              imageSrc={`${imageUrl}/${cryptid.id}/thumbnail.jpeg`}
-              title={cryptid.name}
-              description={`${cryptid.description.slice(0, 40)}...`}
-              to={`/cryptids/${cryptid._id}`}
-              />
-          ))}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {loading && <p>Loading...</p>}
+          {!loading && <CryptidCard cryptids={cryptids} />}
         </CardContainer>
       </Section>
       <Section>
