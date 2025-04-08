@@ -71,7 +71,7 @@ const CryptidList = () => {
                 <AsyncStateHandler
                   loading={loading}
                   error={error}
-                  render={() => (<CryptidCard cryptids={cryptids} />)}
+                  render={() => (<CryptidCard cryptids={cryptids} isNew={false} />)}
                 />
               </CardContainer>
             </Section>

@@ -41,7 +41,7 @@ const Home = () => {
           <AsyncStateHandler
             loading={cryptidsLoading}
             error={cryptidsError}
-            render={() => (<CryptidCard cryptids={cryptids} />)}
+            render={() => (<CryptidCard cryptids={cryptids} isNew={true} />)}
           />
         </CardContainer>
       </Section>
