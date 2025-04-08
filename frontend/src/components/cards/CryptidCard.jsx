@@ -1,7 +1,7 @@
 import Card from "./Card";
 import imageConfig from "../../config/imageConfig";
 
-const CryptidCard = ({ cryptids }) => {
+const CryptidCard = ({ cryptids, isNew = false }) => {
   const imageUrl = imageConfig.imageUrl;
 
   if (!cryptids || cryptids.length === 0) {
@@ -16,7 +16,7 @@ const CryptidCard = ({ cryptids }) => {
           imageSrc={`${imageUrl}/${cryptid.id}/thumbnail.jpeg`}
           title={cryptid.name}
           description={`${cryptid.description.slice(0, 40)}...`}
-          isNew={true}
+          isNew={isNew}
           to={`/cryptids/${cryptid._id}`}
           />
       ))}
