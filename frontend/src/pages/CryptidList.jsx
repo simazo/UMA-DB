@@ -6,6 +6,7 @@ import TextWithIcon from "../components/TextWithIcon";
 import { PaginationContainer, PaginationInfo } from "../components/paginations";
 import { ButtonWithIcon } from "../components/buttons";
 import useCryptids from "../hooks/useCryptids";
+import usePageChange  from "../hooks/usePageChange";
 import AsyncStateHandler from "../components/AsyncStateHandler";
 import { extractQueryParams, getFilterInfo } from "../utils";
 
@@ -35,7 +36,8 @@ const CryptidList = () => {
 
   const { data, error, loading } = useCryptids(API_BASE_URL, queryParams);
   const { filterCategory, filterValue } = getFilterInfo(queryParams);
-
+  const { handlePageChange } = usePageChange(data?.pagination);
+  
   return (
     <AsyncStateHandler
       loading={loading}
@@ -43,11 +45,6 @@ const CryptidList = () => {
       render={() => {
         const { cryptids, pagination } = data;
         const currentPage = parseInt(queryParams.page) || 1;
-        const handlePageChange = (newPage) => {
-          if (newPage < 1 || newPage > pagination.totalPages) return;
-          queryParams.page = newPage;
-          navigate(`?${new URLSearchParams(queryParams).toString()}`); // URLが変わる
-        };
 
         return (
           <>
