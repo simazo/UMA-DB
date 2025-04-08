@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+
 import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
 import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
@@ -8,33 +8,13 @@ import TextWithIcon from "../components/TextWithIcon";
 import AsyncStateHandler from "../components/AsyncStateHandler";
 import { useLatestCryptids, useCryptidCount } from "../hooks";
 import SearchBar from "../components/inputs/SearchBar";
+import useHandleSearch from "../hooks/useHandleSearch"
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const handleSearch = useHandleSearch(); 
   const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids(API_BASE_URL);
   const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount(API_BASE_URL);
-
-  // UMA的分類ボタンクリック
-  const handleUmaTypeButtonClick = (uma_type) => {
-    navigate(`/cryptids?uma_type=${uma_type}`);
-  };
-
-  // 地域ボタンクリック
-  const handleRegionButtonClick = (region) => {
-    navigate(`/cryptids?region=${region}`);
-  };
-
-  // エリアボタンクリック
-  const handleAreaButtonClick = (area) => {
-    navigate(`/cryptids?area=${area}`);
-  };
-
-  // サイズボタンクリック
-  const handleSizeButtonClick = (size) => {
-    navigate(`/cryptids?size=${size}`);
-  };
 
   return (
     <>
@@ -70,8 +50,8 @@ const Home = () => {
           <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">生息場所から探す</TextWithIcon>
         </HeadSecondary>
         <ButtonContainer>
-          {AREA.map(({ id, icon, alt }) => (
-            <ButtonWithIcon key={id} onClick={() => handleAreaButtonClick(id)} iconSrc={icon} alt={alt}>
+          {AREA.map(({ id: areaId, icon, alt }) => (
+            <ButtonWithIcon key={areaId} onClick={() => handleSearch("area", areaId)} iconSrc={icon} alt={alt}>
               {alt}
             </ButtonWithIcon>
           ))}
@@ -82,8 +62,8 @@ const Home = () => {
           <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">サイズから探す</TextWithIcon>
         </HeadSecondary>
         <ButtonContainer>
-          {SIZE.map(({ id, icon, alt }) => (
-            <ButtonWithIcon key={id} onClick={() => handleSizeButtonClick(id)} iconSrc={icon} alt={alt}>
+          {SIZE.map(({ id: sizeId, icon, alt }) => (
+            <ButtonWithIcon key={sizeId} onClick={() => handleSearch("size", sizeId)} iconSrc={icon} alt={alt}>
               {alt}
             </ButtonWithIcon>
           ))}
@@ -102,8 +82,8 @@ const Home = () => {
           <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">生息地域から探す</TextWithIcon>
         </HeadSecondary>
         <ButtonContainer>
-          {REGION.map(({ id, icon, alt }) => (
-            <ButtonWithIcon key={id} onClick={() => handleRegionButtonClick(id)} iconSrc={icon} alt={alt}>
+          {REGION.map(({ id: regionId, icon, alt }) => (
+            <ButtonWithIcon key={regionId} onClick={() => handleSearch("regionId", regionId)} iconSrc={icon} alt={alt}>
               {alt}
             </ButtonWithIcon>
           ))}
@@ -114,8 +94,8 @@ const Home = () => {
           <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">UMA的分類から探す</TextWithIcon>
         </HeadSecondary>
         <ButtonContainer>
-          {UMA_TYPE.map(({ id, icon, alt }) => (
-            <ButtonWithIcon key={id} onClick={() => handleUmaTypeButtonClick(id)} iconSrc={icon} alt={alt}>
+          {UMA_TYPE.map(({ id: umaTypeId, icon, alt }) => (
+            <ButtonWithIcon key={umaTypeId} onClick={() => handleSearch("uma_type", umaTypeId)} iconSrc={icon} alt={alt}>
               {alt}
             </ButtonWithIcon>
           ))}
