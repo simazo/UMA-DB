@@ -83,7 +83,7 @@ const Home = () => {
         </HeadSecondary>
         <ButtonContainer>
           {REGION.map(({ id: regionId, icon, alt }) => (
-            <ButtonWithIcon key={regionId} onClick={() => handleSearch("regionId", regionId)} iconSrc={icon} alt={alt}>
+            <ButtonWithIcon key={regionId} onClick={() => handleSearch("region", regionId)} iconSrc={icon} alt={alt}>
               {alt}
             </ButtonWithIcon>
           ))}
