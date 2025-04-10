@@ -40,6 +40,12 @@ const Cryptid = () => {
   const handleSmallImageClick = (imageSrc) => {
     setSelectedImage(imageSrc);
   };
+
+  useEffect(() => {
+    if (cryptid && selectedImage === null) {
+      setSelectedImage(`${imageUrl}/${cryptid.id}/1.jpeg`);
+    }
+  }, [cryptid, selectedImage, imageUrl]);
   
   return (
     <AsyncStateHandler
