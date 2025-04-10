@@ -59,7 +59,7 @@ const Cryptid = () => {
                 <ProfileColumn>
                   <LeftColumn>
                     <LargeImage
-                      src={`${imageUrl}/${cryptid.id}/1.jpeg`}
+                      src={selectedImage}
                       alt="Image 1"
                       onClick={ () => openModal(selectedImage) }
                     />
