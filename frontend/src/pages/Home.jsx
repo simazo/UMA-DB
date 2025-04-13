@@ -1,7 +1,6 @@
 
 import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
 import { Section, PaddingBox } from "../components/layouts";
-import { ButtonContainer, ButtonWithIcon } from "../components/buttons";
 import { CardContainer, CryptidCard} from "../components/cards";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import TextWithIcon from "../components/TextWithIcon";
@@ -9,6 +8,7 @@ import AsyncStateHandler from "../components/AsyncStateHandler";
 import { useLatestCryptids, useCryptidCount } from "../hooks";
 import SearchBar from "../components/inputs/SearchBar";
 import useHandleSearch from "../hooks/useHandleSearch"
+import SearchSection from "../components/SearchSection";
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Home = () => {
@@ -46,28 +46,24 @@ const Home = () => {
         </CardContainer>
       </Section>
       <Section>
-        <HeadSecondary>
-          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">生息場所から探す</TextWithIcon>
-        </HeadSecondary>
-        <ButtonContainer>
-          {AREA.map(({ id: areaId, icon, alt }) => (
-            <ButtonWithIcon key={areaId} onClick={() => handleSearch("area", areaId)} iconSrc={icon} alt={alt}>
-              {alt}
-            </ButtonWithIcon>
-          ))}
-        </ButtonContainer>
+        <SearchSection
+          title="生息場所から探す"
+          iconSrc="image/i-green-glass.svg"
+          alt="虫めがねアイコン"
+          dataList={AREA}
+          searchKey="area"
+          onSearch={handleSearch}
+        />
       </Section>
       <Section>
-        <HeadSecondary>
-          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">サイズから探す</TextWithIcon>
-        </HeadSecondary>
-        <ButtonContainer>
-          {SIZE.map(({ id: sizeId, icon, alt }) => (
-            <ButtonWithIcon key={sizeId} onClick={() => handleSearch("size", sizeId)} iconSrc={icon} alt={alt}>
-              {alt}
-            </ButtonWithIcon>
-          ))}
-        </ButtonContainer>
+        <SearchSection
+          title="サイズから探す"
+          iconSrc="image/i-green-glass.svg"
+          alt="虫めがねアイコン"
+          dataList={SIZE}
+          searchKey="size"
+          onSearch={handleSearch}
+        />
       </Section>
       <Section>
         <HeadSecondary>
@@ -78,28 +74,24 @@ const Home = () => {
         </PaddingBox>
       </Section>
       <Section>
-        <HeadSecondary>
-          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">生息地域から探す</TextWithIcon>
-        </HeadSecondary>
-        <ButtonContainer>
-          {REGION.map(({ id: regionId, icon, alt }) => (
-            <ButtonWithIcon key={regionId} onClick={() => handleSearch("region", regionId)} iconSrc={icon} alt={alt}>
-              {alt}
-            </ButtonWithIcon>
-          ))}
-        </ButtonContainer>
+        <SearchSection
+          title="生息地域から探す"
+          iconSrc="image/i-green-glass.svg"
+          alt="虫めがねアイコン"
+          dataList={REGION}
+          searchKey="region"
+          onSearch={handleSearch}
+        />
       </Section>
       <Section>
-        <HeadSecondary>
-          <TextWithIcon iconSrc="image/i-green-glass.svg" alt="虫めがねアイコン">UMA的分類から探す</TextWithIcon>
-        </HeadSecondary>
-        <ButtonContainer>
-          {UMA_TYPE.map(({ id: umaTypeId, icon, alt }) => (
-            <ButtonWithIcon key={umaTypeId} onClick={() => handleSearch("uma_type", umaTypeId)} iconSrc={icon} alt={alt}>
-              {alt}
-            </ButtonWithIcon>
-          ))}
-        </ButtonContainer>
+        <SearchSection
+          title="UMA的分類から探す"
+          iconSrc="image/i-green-glass.svg"
+          alt="虫めがねアイコン"
+          dataList={UMA_TYPE}
+          searchKey="uma_type"
+          onSearch={handleSearch}
+        />
       </Section>
     </>
   );
