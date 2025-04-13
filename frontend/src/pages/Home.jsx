@@ -48,8 +48,6 @@ const Home = () => {
       <Section>
         <SearchSection
           title="生息場所から探す"
-          iconSrc="image/i-green-glass.svg"
-          alt="虫めがねアイコン"
           dataList={AREA}
           searchKey="area"
           onSearch={handleSearch}
@@ -58,8 +56,6 @@ const Home = () => {
       <Section>
         <SearchSection
           title="サイズから探す"
-          iconSrc="image/i-green-glass.svg"
-          alt="虫めがねアイコン"
           dataList={SIZE}
           searchKey="size"
           onSearch={handleSearch}
@@ -76,8 +72,6 @@ const Home = () => {
       <Section>
         <SearchSection
           title="生息地域から探す"
-          iconSrc="image/i-green-glass.svg"
-          alt="虫めがねアイコン"
           dataList={REGION}
           searchKey="region"
           onSearch={handleSearch}
@@ -86,8 +80,6 @@ const Home = () => {
       <Section>
         <SearchSection
           title="UMA的分類から探す"
-          iconSrc="image/i-green-glass.svg"
-          alt="虫めがねアイコン"
           dataList={UMA_TYPE}
           searchKey="uma_type"
           onSearch={handleSearch}

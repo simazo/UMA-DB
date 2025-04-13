@@ -12,7 +12,7 @@ const StyledTextWithIcon = styled.div`
   }
 `;
 
-const TextWithIcon = ({ iconSrc, alt, children }) => {
+const TextWithIcon = ({ iconSrc="image/i-green-glass.svg", alt="虫めがねアイコン", children }) => {
   return (
     <StyledTextWithIcon>
       <img className="icon" src={iconSrc} alt={alt} />
