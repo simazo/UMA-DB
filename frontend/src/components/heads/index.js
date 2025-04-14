@@ -1,0 +1,1 @@
+export { HeadPrimary, HeadSecondary } from "./Heading";
