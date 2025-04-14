@@ -1,13 +1,5 @@
-import {
-  Section,
-  HeadPrimary,
-  AsyncStateHandler,
-} from "../../components";
-
-import FilterInfo from "./FilterInfo";
-import ResultInfo from "./ResultInfo";
-import CryptidsList from "./CryptidsList";
-import Pagination from "./Pagination";
+import { Section,HeadPrimary,AsyncStateHandler } from "../../components";
+import { FilterInfo, ResultInfo, CryptidsList, Pagination } from "./";
 
 const Page = ({
   loading,

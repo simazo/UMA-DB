@@ -6,7 +6,8 @@ import theme from "./components/styles/theme";
 import GlobalStyle from "./components/GlobalStyle"
 
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Home, CryptidList, Cryptid } from "./pages";
+//import { Home, CryptidList, Cryptid } from "./pages";
+import Cryptid from "./pages/Cryptid";
 import {HomeContainer, CryptidsContainer} from './containers';
 
 import { Header, Footer } from "./components/layouts";
