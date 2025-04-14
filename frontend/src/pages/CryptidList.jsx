@@ -10,8 +10,6 @@ import usePageChange  from "../hooks/usePageChange";
 import AsyncStateHandler from "../components/AsyncStateHandler";
 import { extractQueryParams, getFilterInfo } from "../utils";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 const CryptidList = () => {  
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,7 +32,7 @@ const CryptidList = () => {
     queryParams.page = "1";
   }
 
-  const { data, error, loading } = useCryptids(API_BASE_URL, queryParams);
+  const { data, error, loading } = useCryptids(queryParams);
   const { filterCategory, filterValue } = getFilterInfo(queryParams);
   const { handlePageChange } = usePageChange(data?.pagination);
   
