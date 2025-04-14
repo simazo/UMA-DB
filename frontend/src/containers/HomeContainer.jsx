@@ -1,5 +1,5 @@
 import { useLatestCryptids, useCryptidCount, useHandleSearch } from "../hooks";
-import HomePage from "../pages/Home/HomePage";
+import Page from "../pages/Home/Page";
 
 const HomeContainer = () => {
   const handleSearch = useHandleSearch(); 
@@ -7,7 +7,7 @@ const HomeContainer = () => {
   const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount();
 
   return (
-    <HomePage
+    <Page
       handleSearch={handleSearch}
       cryptids={cryptids}
       cryptidsError={cryptidsError}

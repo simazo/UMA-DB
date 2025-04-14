@@ -4,12 +4,12 @@ import {
   AsyncStateHandler,
 } from "../../components";
 
-import FilterInfoSection from "./FilterInfoSection";
-import ResultInfoSection from "./ResultInfoSection";
-import CryptidsListSection from "./CryptidsListSection";
-import PaginationSection from "./PaginationSection";
+import FilterInfo from "./FilterInfo";
+import ResultInfo from "./ResultInfo";
+import CryptidsList from "./CryptidsList";
+import Pagination from "./Pagination";
 
-const CryptidsPage = ({
+const Page = ({
   loading,
   error,
   cryptids,
@@ -30,24 +30,24 @@ const CryptidsPage = ({
               <HeadPrimary>UMA一覧</HeadPrimary>
             </Section>
             <Section>
-              <FilterInfoSection
+              <FilterInfo
                 filterCategory={filterCategory}
                 filterValue={filterValue}
               />
             </Section>
             <Section>
-              <ResultInfoSection
+              <ResultInfo
                 cryptids={cryptids}
                 pagination={pagination}
               />
-              <CryptidsListSection
+              <CryptidsList
                 cryptids={cryptids}
                 loading={loading}
                 error={error}
               />
             </Section>
             <Section>
-              <PaginationSection 
+              <Pagination 
                 currentPage={currentPage}
                 pagination={pagination}
                 onPageChange={onPageChange}
@@ -60,4 +60,4 @@ const CryptidsPage = ({
   );
 };
 
-export default CryptidsPage;
+export default Page;

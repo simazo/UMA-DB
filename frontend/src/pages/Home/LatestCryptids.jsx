@@ -3,7 +3,7 @@ import { HeadSecondary } from "../../components/heads/Heading";
 import TextWithIcon from "../../components/TextWithIcon";
 import { CardContainer, CryptidCard} from "../../components/cards";
 
-const LatestCryptidsSection = ({loading, error, cryptids}) => {
+const LatestCryptids = ({loading, error, cryptids}) => {
   return (
     <>
       <HeadSecondary>
@@ -21,4 +21,4 @@ const LatestCryptidsSection = ({loading, error, cryptids}) => {
   );
 };
 
-export default LatestCryptidsSection;
+export default LatestCryptids;

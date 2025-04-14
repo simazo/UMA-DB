@@ -1,6 +1,6 @@
 import { HeadSecondary, TextWithIcon } from "../../components";
 
-const ResultInfoSection = ({ cryptids, pagination }) => {
+const ResultInfo = ({ cryptids, pagination }) => {
   return (
     <>
       <HeadSecondary>
@@ -16,4 +16,4 @@ const ResultInfoSection = ({ cryptids, pagination }) => {
 
 };
 
-export default ResultInfoSection;
+export default ResultInfo;

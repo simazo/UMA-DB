@@ -1,6 +1,6 @@
 import { CardContainer, CryptidCard, AsyncStateHandler } from "../../components";
 
-const CryptidsListSection = ({ cryptids, loading, error }) => {
+const CryptidsList = ({ cryptids, loading, error }) => {
   return (
     <CardContainer>
       <AsyncStateHandler
@@ -12,4 +12,4 @@ const CryptidsListSection = ({ cryptids, loading, error }) => {
   );
 };
 
-export default CryptidsListSection;
+export default CryptidsList;

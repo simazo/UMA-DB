@@ -1,6 +1,6 @@
 import { PaginationContainer, ButtonWithIcon, PaginationInfo } from "../../components";
 
-const PaginationSection = ({ currentPage, pagination, onPageChange }) => {
+const Pagination = ({ currentPage, pagination, onPageChange }) => {
   return (
     <PaginationContainer>
       <ButtonWithIcon 
@@ -26,4 +26,4 @@ const PaginationSection = ({ currentPage, pagination, onPageChange }) => {
   );
 };
 
-export default PaginationSection;
+export default Pagination;

@@ -2,9 +2,9 @@ import { AREA, SIZE, REGION, UMA_TYPE } from "../../constants";
 import { Section } from "../../components/layouts";
 import { HeadPrimary } from "../../components/heads/Heading";
 import SearchSection from "../../components/SearchSection";
-import CryptidCountSection from "./CryptidCountSection";
-import LatestCryptidsSection from "./LatestCryptidsSection";
-import NameSearchSection from "./NameSearchSection";
+import CryptidCount from "./CryptidCount";
+import LatestCryptids from "./LatestCryptids";
+import NameSearch from "./NameSearch";
 
 const HomePage = ({
   handleSearch,
@@ -21,14 +21,14 @@ const HomePage = ({
         <HeadPrimary>UMA-DB</HeadPrimary>
       </Section>
       <Section>
-        <CryptidCountSection
+        <CryptidCount
           loading={countLoading}
           error={countError}
           count={cryptidCount}
         />
       </Section>
       <Section>
-        <LatestCryptidsSection
+        <LatestCryptids
           loading={cryptidsLoading}
           error={cryptidsError}
           cryptids={cryptids}
@@ -51,7 +51,7 @@ const HomePage = ({
         />
       </Section>
       <Section>
-        <NameSearchSection />
+        <NameSearch />
       </Section>
       <Section>
         <SearchSection

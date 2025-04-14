@@ -1,5 +1,5 @@
 import { useCryptids, usePageChange, useCryptidQueryParams } from "../hooks";
-import CryptidsPage from "../pages/Cryptids/CryptidsPage";
+import Page from "../pages/Cryptids/Page";
 
 const CryptidsContainer = () => {
   const {
@@ -21,7 +21,7 @@ const CryptidsContainer = () => {
   const { handlePageChange } = usePageChange(pagination);
 
   return (
-    <CryptidsPage
+    <Page
       loading={loading}
       error={error}
       cryptids={cryptids}

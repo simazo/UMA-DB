@@ -1,4 +1,4 @@
-const FilterInfoSection = ({filterCategory, filterValue}) => {
+const FilterInfo = ({filterCategory, filterValue}) => {
   return (
     <h4>
       {filterCategory && filterValue
@@ -8,4 +8,4 @@ const FilterInfoSection = ({filterCategory, filterValue}) => {
   );
 };
 
-export default FilterInfoSection;
+export default FilterInfo;
