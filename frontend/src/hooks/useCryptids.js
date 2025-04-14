@@ -1,6 +1,7 @@
 import useFetchData from "./useFetchData";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const useCryptids = (API_BASE_URL, queryParams) => {
+const useCryptids = (queryParams) => {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = `${API_BASE_URL}/cryptids?${queryString}`;
 

@@ -5,7 +5,7 @@ import { ButtonContainer, ButtonWithIcon } from "./buttons";
 
 const SearchSection = ({ title, iconSrc, alt, dataList, searchKey, onSearch }) => {
   return (
-    <Section>
+    <>
       <HeadSecondary>
         <TextWithIcon iconSrc={iconSrc} alt={alt}>{title}</TextWithIcon>
       </HeadSecondary>
@@ -20,7 +20,7 @@ const SearchSection = ({ title, iconSrc, alt, dataList, searchKey, onSearch }) =
           </ButtonWithIcon>
         ))}
       </ButtonContainer>
-    </Section>
+    </>
   );
 };
 

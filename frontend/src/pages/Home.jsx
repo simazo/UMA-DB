@@ -9,12 +9,11 @@ import { useLatestCryptids, useCryptidCount } from "../hooks";
 import SearchBar from "../components/inputs/SearchBar";
 import useHandleSearch from "../hooks/useHandleSearch"
 import SearchSection from "../components/SearchSection";
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Home = () => {
   const handleSearch = useHandleSearch(); 
-  const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids(API_BASE_URL);
-  const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount(API_BASE_URL);
+  const { data: cryptids, error: cryptidsError, loading: cryptidsLoading } = useLatestCryptids();
+  const { data: cryptidCount, error: countError, loading: countLoading } = useCryptidCount();
 
   return (
     <>
