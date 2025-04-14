@@ -1,14 +1,15 @@
 
-import { AREA, SIZE, REGION, UMA_TYPE } from "../constants";
-import { Section, PaddingBox } from "../components/layouts";
-import { CardContainer, CryptidCard} from "../components/cards";
-import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
-import TextWithIcon from "../components/TextWithIcon";
-import AsyncStateHandler from "../components/AsyncStateHandler";
-import { useLatestCryptids, useCryptidCount } from "../hooks";
-import SearchBar from "../components/inputs/SearchBar";
-import useHandleSearch from "../hooks/useHandleSearch"
-import SearchSection from "../components/SearchSection";
+import { AREA, SIZE, REGION, UMA_TYPE } from "../../constants";
+import { Section, PaddingBox } from "../../components/layouts";
+import { CardContainer, CryptidCard} from "../../components/cards";
+import { HeadPrimary, HeadSecondary } from "../../components/heads/Heading";
+import TextWithIcon from "../../components/TextWithIcon";
+import AsyncStateHandler from "../../components/AsyncStateHandler";
+import { useLatestCryptids, useCryptidCount } from "../../hooks";
+import SearchBar from "../../components/inputs/SearchBar";
+import useHandleSearch from "../../hooks/useHandleSearch"
+import SearchSection from "../../components/SearchSection";
+import CryptidCountSection from "./CryptidCountSection";
 
 const Home = () => {
   const handleSearch = useHandleSearch(); 
@@ -21,15 +22,10 @@ const Home = () => {
         <HeadPrimary>UMA-DB</HeadPrimary>
       </Section>
       <Section>
-        <AsyncStateHandler
+        <CryptidCountSection
           loading={countLoading}
           error={countError}
-          render={() => (
-            <h4>
-              世界中のUMA情報を集めたデータベース 【現在:{" "}
-              <span style={{ fontSize: "120%" }}>{cryptidCount}</span>件】
-            </h4>
-          )}
+          count={cryptidCount}
         />
       </Section>
       <Section>
