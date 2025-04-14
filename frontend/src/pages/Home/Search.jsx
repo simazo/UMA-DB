@@ -1,9 +1,8 @@
-import { Section } from "./layouts";
-import { HeadSecondary } from "./heads/Heading";
-import TextWithIcon from "./TextWithIcon";
-import { ButtonContainer, ButtonWithIcon } from "./buttons";
+import { HeadSecondary } from "../../components/heads/Heading";
+import TextWithIcon from "../../components/TextWithIcon";
+import { ButtonContainer, ButtonWithIcon } from "../../components/buttons";
 
-const SearchSection = ({ title, iconSrc, alt, dataList, searchKey, onSearch }) => {
+const Search = ({ title, iconSrc, alt, dataList, searchKey, onSearch }) => {
   return (
     <>
       <HeadSecondary>
@@ -24,4 +23,4 @@ const SearchSection = ({ title, iconSrc, alt, dataList, searchKey, onSearch }) =
   );
 };
 
-export default SearchSection;
+export default Search;
