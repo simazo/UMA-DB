@@ -1,15 +1,13 @@
 import {
   Section,
   HeadPrimary,
-  HeadSecondary,
-  CryptidCard,
-  CardContainer,
-  TextWithIcon,
-  PaginationContainer,
-  PaginationInfo,
-  ButtonWithIcon,
   AsyncStateHandler,
 } from "../../components";
+
+import FilterInfoSection from "./FilterInfoSection";
+import ResultInfoSection from "./ResultInfoSection";
+import CryptidsListSection from "./CryptidsListSection";
+import PaginationSection from "./PaginationSection";
 
 const CryptidsPage = ({
   loading,
@@ -32,51 +30,28 @@ const CryptidsPage = ({
               <HeadPrimary>UMA一覧</HeadPrimary>
             </Section>
             <Section>
-              <h4>
-                {filterCategory && filterValue
-                  ? `${filterCategory}: 「${filterValue}」 で絞り込み`
-                  : "条件なし"}
-              </h4>
+              <FilterInfoSection
+                filterCategory={filterCategory}
+                filterValue={filterValue}
+              />
             </Section>
             <Section>
-              <HeadSecondary>
-              <TextWithIcon iconSrc="image/i-green-issie.svg" alt="イッシーアイコン">
-                {cryptids.length === 0
-                  ? "見つかりませんでした"
-                  : `${pagination.totalDocs}件のUMAが見つかりました`
-                }
-              </TextWithIcon>
-              </HeadSecondary>
-              <CardContainer>
-                <AsyncStateHandler
-                  loading={loading}
-                  error={error}
-                  render={() => (<CryptidCard cryptids={cryptids} isNew={false} />)}
-                />
-              </CardContainer>
+              <ResultInfoSection
+                cryptids={cryptids}
+                pagination={pagination}
+              />
+              <CryptidsListSection
+                cryptids={cryptids}
+                loading={loading}
+                error={error}
+              />
             </Section>
             <Section>
-              <PaginationContainer>
-                <ButtonWithIcon 
-                  key="back" 
-                  onClick={() => onPageChange(currentPage - 1)} 
-                  disabled={!pagination.hasPrevPage} 
-                  iconSrc="image/i-orange-issie.svg" 
-                  alt="前へ戻る"
-                >
-                  前へ
-                </ButtonWithIcon>
-                <PaginationInfo currentPage={currentPage} totalPages={pagination.totalPages} />
-                <ButtonWithIcon 
-                  key="next" 
-                  onClick={() => onPageChange(currentPage + 1)} 
-                  disabled={!pagination.hasNextPage} 
-                  iconSrc="image/i-orange-issie.svg" 
-                  alt="次へ進む"
-                >
-                  次へ
-                </ButtonWithIcon>
-              </PaginationContainer>
+              <PaginationSection 
+                currentPage={currentPage}
+                pagination={pagination}
+                onPageChange={onPageChange}
+              />
             </Section>
           </>
         );
