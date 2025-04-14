@@ -7,7 +7,8 @@ import GlobalStyle from "./components/GlobalStyle"
 
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Home, CryptidList, Cryptid } from "./pages";
-import HomeContainer from './containers/HomeContainer';
+import {HomeContainer, CryptidsContainer} from './containers';
+
 import { Header, Footer } from "./components/layouts";
 import { PageContainer } from "./components/layouts";
 import ScrollToTop from './common/ScrollToTop'
@@ -38,7 +39,7 @@ const App = () => {
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<HomeContainer />} />
-            <Route path="/cryptids" element={<CryptidList />} />
+            <Route path="/cryptids" element={<CryptidsContainer />} />
             <Route path="/cryptids/:id" element={<Cryptid />} />
           </Routes>
         </PageContainer>

@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { Section } from "../components/layouts";
 import { HeadPrimary, HeadSecondary } from "../components/heads/Heading";
 import { CryptidCard, CardContainer } from "../components/cards";
@@ -8,32 +7,11 @@ import { ButtonWithIcon } from "../components/buttons";
 import useCryptids from "../hooks/useCryptids";
 import usePageChange  from "../hooks/usePageChange";
 import AsyncStateHandler from "../components/AsyncStateHandler";
-import { extractQueryParams, getFilterInfo } from "../utils";
+import useCryptidQueryParams from "../hooks/useCryptidQueryParams";
 
 const CryptidList = () => {  
-  const location = useLocation();
-  const navigate = useNavigate();
-  const params = new URLSearchParams(location.search);
-  const queryParams = extractQueryParams(
-    [
-      "area", 
-      "size", 
-      "name", 
-      "region", 
-      "uma_type", 
-      "sort", 
-      "limit", 
-      "page"
-    ], 
-    params
-  );
-
-  if (!queryParams.page) {
-    queryParams.page = "1";
-  }
-
+  const { queryParams, filterCategory, filterValue } = useCryptidQueryParams();
   const { data, error, loading } = useCryptids(queryParams);
-  const { filterCategory, filterValue } = getFilterInfo(queryParams);
   const { handlePageChange } = usePageChange(data?.pagination);
   
   return (

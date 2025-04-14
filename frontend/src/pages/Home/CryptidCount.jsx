@@ -1,6 +1,6 @@
 import AsyncStateHandler from "../../components/AsyncStateHandler";
 
-const CryptidCountSection = ({ loading, error, count }) => {
+const CryptidCount = ({ loading, error, count }) => {
   return (
     <AsyncStateHandler
       loading={loading}
@@ -15,4 +15,4 @@ const CryptidCountSection = ({ loading, error, count }) => {
   );
 };
 
-export default CryptidCountSection;
+export default CryptidCount;

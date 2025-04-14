@@ -3,7 +3,7 @@ import SearchBar from "../../components/inputs/SearchBar";
 import { PaddingBox } from "../../components/layouts";
 import TextWithIcon from "../../components/TextWithIcon";
 
-const NameSearchSection = () => {
+const NameSearch = () => {
   return (
     <>
       <HeadSecondary>
@@ -16,4 +16,4 @@ const NameSearchSection = () => {
   );
 };
 
-export default NameSearchSection;
+export default NameSearch;
