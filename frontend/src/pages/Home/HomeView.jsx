@@ -1,8 +1,8 @@
 import { AREA, SIZE, REGION, UMA_TYPE } from "../../constants";
 import { Section,HeadPrimary } from "../../components";
-import { Search, CryptidCount, LatestCryptids, NameSearch } from "./";
+import { Search, CryptidCount, LatestCryptids, NameSearch } from ".";
 
-const HomePage = ({
+const HomeView = ({
   handleSearch,
   cryptids,
   cryptidsError,
@@ -69,4 +69,4 @@ const HomePage = ({
   );
 };
 
-export default HomePage;
+export default HomeView;

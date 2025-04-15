@@ -8,9 +8,9 @@ import {
   RightColumn,
 } from "../../components/layouts/ProfileContainer";
 
-import { Header, Profile, ImageGallery, Detail } from "./";
+import { Header, Profile, ImageGallery, Detail } from ".";
 
-const Page = ({cryptid}) => {
+const CryptidView = ({cryptid}) => {
   return (
     <>
       <Section>
@@ -35,5 +35,5 @@ const Page = ({cryptid}) => {
   );
 };
 
-export default Page;
+export default CryptidView;
 
