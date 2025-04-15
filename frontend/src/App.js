@@ -6,8 +6,7 @@ import theme from "./components/styles/theme";
 import GlobalStyle from "./components/GlobalStyle"
 
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Home, CryptidList, Cryptid } from "./pages";
-import {HomeContainer, CryptidsContainer} from './containers';
+import {HomeContainer, CryptidsContainer, CryptidContainer} from './containers';
 
 import { Header, Footer } from "./components/layouts";
 import { PageContainer } from "./components/layouts";
@@ -40,7 +39,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomeContainer />} />
             <Route path="/cryptids" element={<CryptidsContainer />} />
-            <Route path="/cryptids/:id" element={<Cryptid />} />
+            <Route path="/cryptids/:id" element={<CryptidContainer />} />
           </Routes>
         </PageContainer>
         <Footer />

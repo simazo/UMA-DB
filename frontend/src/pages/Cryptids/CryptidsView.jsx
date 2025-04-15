@@ -1,15 +1,7 @@
-import {
-  Section,
-  HeadPrimary,
-  AsyncStateHandler,
-} from "../../components";
+import { Section,HeadPrimary,AsyncStateHandler } from "../../components";
+import { FilterInfo, ResultInfo, CryptidsList, Pagination } from ".";
 
-import FilterInfo from "./FilterInfo";
-import ResultInfo from "./ResultInfo";
-import CryptidsList from "./CryptidsList";
-import Pagination from "./Pagination";
-
-const Page = ({
+const CryptidsView = ({
   loading,
   error,
   cryptids,
@@ -60,4 +52,4 @@ const Page = ({
   );
 };
 
-export default Page;
+export default CryptidsView;

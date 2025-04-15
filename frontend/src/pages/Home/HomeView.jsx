@@ -1,12 +1,8 @@
 import { AREA, SIZE, REGION, UMA_TYPE } from "../../constants";
-import { Section } from "../../components/layouts";
-import { HeadPrimary } from "../../components/heads/Heading";
-import SearchSection from "../../components/SearchSection";
-import CryptidCount from "./CryptidCount";
-import LatestCryptids from "./LatestCryptids";
-import NameSearch from "./NameSearch";
+import { Section,HeadPrimary } from "../../components";
+import { Search, CryptidCount, LatestCryptids, NameSearch } from ".";
 
-const HomePage = ({
+const HomeView = ({
   handleSearch,
   cryptids,
   cryptidsError,
@@ -35,7 +31,7 @@ const HomePage = ({
         />
       </Section>
       <Section>
-        <SearchSection
+        <Search
           title="生息場所から探す"
           dataList={AREA}
           searchKey="area"
@@ -43,7 +39,7 @@ const HomePage = ({
         />
       </Section>
       <Section>
-        <SearchSection
+        <Search
           title="サイズから探す"
           dataList={SIZE}
           searchKey="size"
@@ -54,7 +50,7 @@ const HomePage = ({
         <NameSearch />
       </Section>
       <Section>
-        <SearchSection
+        <Search
           title="生息地域から探す"
           dataList={REGION}
           searchKey="region"
@@ -62,7 +58,7 @@ const HomePage = ({
         />
       </Section>
       <Section>
-        <SearchSection
+        <Search
           title="UMA的分類から探す"
           dataList={UMA_TYPE}
           searchKey="uma_type"
@@ -73,4 +69,4 @@ const HomePage = ({
   );
 };
 
-export default HomePage;
+export default HomeView;
