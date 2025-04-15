@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Section } from "../components/layouts";
-import { HeadPrimary } from "../components/heads/Heading";
+import { Section } from "../../components/layouts";
+import { HeadPrimary } from "../../components/heads/Heading";
 import {
   ProfileContainer,
   ProfileColumn,
@@ -13,39 +13,33 @@ import {
   ProfileItem,
   ProfileLabel,
   ProfileText,
-} from "../components/layouts/ProfileContainer";
-import imageConfig from "../config/imageConfig";
-import ImageModal from "../components/ImageModal";
-import { Video, VideoContainer } from "../components/videos";
+} from "../../components/layouts/ProfileContainer";
+import imageConfig from "../../config/imageConfig";
+import ImageModal from "../../components/ImageModal";
+import { Video, VideoContainer } from "../../components/videos";
 import { Link } from "react-router-dom";
-import { AREA, SPECIES_TYPE, REGION, UMA_TYPE } from "../constants";
-import useCryptid from "../hooks/useCryptid";
-import AsyncStateHandler from "../components/AsyncStateHandler";
+import { AREA, SPECIES_TYPE, REGION, UMA_TYPE } from "../../constants";
+import useCryptid from "../../hooks/useCryptid";
+import useImageModal from '../../hooks/useImageModal';
+import useInitialSelectedImage from '../../hooks/useInitialSelectedImage';
+import AsyncStateHandler from "../../components/AsyncStateHandler";
 
 const Cryptid = () => {
   const { id } = useParams();
   const { data: cryptid, error, loading } = useCryptid(id);
   const imageUrl = imageConfig.imageUrl;
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (image) => {
-    setSelectedImage(image);
-    setIsModalOpen(true);
-  };
+  const {
+    selectedImage,
+    isModalOpen,
+    openModal,
+    closeModal,
+    handleSmallImageClick,
+    setSelectedImage,
+  } = useImageModal();
 
-  const closeModal = () => setIsModalOpen(false);
+  useInitialSelectedImage({ cryptid, selectedImage, setSelectedImage, imageUrl });
 
-  const handleSmallImageClick = (imageSrc) => {
-    setSelectedImage(imageSrc);
-  };
-
-  useEffect(() => {
-    if (cryptid && selectedImage === null) {
-      setSelectedImage(`${imageUrl}/${cryptid.id}/1.jpeg`);
-    }
-  }, [cryptid, selectedImage, imageUrl]);
-  
   return (
     <AsyncStateHandler
       loading={loading}
