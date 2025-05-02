@@ -5,7 +5,6 @@ const useImageModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (image) => {
-    setSelectedImage(image);
     setIsModalOpen(true);
   };
 
@@ -14,7 +13,7 @@ const useImageModal = () => {
   }
 
   const handleSmallImageClick = (imageSrc) => {
-    openModal(imageSrc);
+    setSelectedImage(imageSrc);
   };
 
   return {
