@@ -1,7 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import router from "./routes/index.mjs"
+import publicRoutes from "./routes/index.mjs"
+import adminRoutes from "./routes/admin/index.mjs";
+import basicAuth from 'express-basic-auth';
 
 dotenv.config();
 
@@ -27,7 +29,14 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(router);
+
+app.use('/admin', basicAuth({
+  users: { [process.env.BASIC_AUTH_USER] : process.env.BASIC_AUTH_PASS },
+  challenge: true,
+}));
+
+app.use('/admin', adminRoutes);
+app.use(publicRoutes);
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
