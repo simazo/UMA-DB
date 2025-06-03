@@ -21,12 +21,13 @@ const useCryptidQueryParams = () => {
     queryParams.page = "1";
   }
 
-  const { filterCategory, filterValue } = getFilterInfo(queryParams);
+  const { filterCategory, filterValue, filterNote } = getFilterInfo(queryParams);
 
   return {
     queryParams,
     filterCategory,
-    filterValue
+    filterValue,
+    filterNote
   };
 };
 

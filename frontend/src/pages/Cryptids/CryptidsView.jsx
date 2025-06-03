@@ -9,6 +9,7 @@ const CryptidsView = ({
   currentPage,
   filterCategory,
   filterValue,
+  filterNote,
   onPageChange,
 }) => {
   return (
@@ -25,6 +26,7 @@ const CryptidsView = ({
               <FilterInfo
                 filterCategory={filterCategory}
                 filterValue={filterValue}
+                filterNote={filterNote}
               />
             </Section>
             <Section>
