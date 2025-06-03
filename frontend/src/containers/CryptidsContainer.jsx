@@ -6,6 +6,7 @@ const CryptidsContainer = () => {
     queryParams,
     filterCategory,
     filterValue,
+    filterNote,
   } = useCryptidQueryParams();
 
   const {
@@ -29,6 +30,7 @@ const CryptidsContainer = () => {
       currentPage={currentPage}
       filterCategory={filterCategory}
       filterValue={filterValue}
+      filterNote={filterNote}
       onPageChange={handlePageChange}
     />
   );
