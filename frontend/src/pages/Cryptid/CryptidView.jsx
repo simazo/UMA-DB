@@ -1,19 +1,32 @@
 import { Section } from "../../components/layouts";
 import TweetButton from "../../components/sns/TweetButton";
 import SnsButtonContainer from "../../components/layouts/SnsButtonContainer";
-
+import { Header, Profile, ImageGallery, Detail } from ".";
 import {
   ProfileContainer,
   ProfileColumn,
   LeftColumn,
   RightColumn,
 } from "../../components/layouts/ProfileContainer";
+import imageConfig from "../../config/imageConfig";
+import OGPMeta from "../../components/sns/OGPMeta";
 
-import { Header, Profile, ImageGallery, Detail } from ".";
-const currentUrl = window.location.href;
 const CryptidView = ({cryptid}) => {
+  const imageUrl = imageConfig.imageUrl;
+  const ogpImage = `${imageUrl}/${cryptid.id}/thumbnail.jpeg`;
+  const pageUrl = window.location.href;
+  const title = "【UMA-DB】世界中のUMAをまとめました";
+  const tweetText = `${cryptid.name}に関する情報はこちら`;
+  const hashtags = ["UMA", "未確認生物", cryptid.name, ...(cryptid.alias ? [cryptid.alias] : [])];
+
   return (
     <>
+      <OGPMeta
+        title={title}
+        description={tweetText}
+        image={ogpImage}
+        url={pageUrl}
+      />
       <Section>
         <Header cryptid={cryptid} />
       </Section>
@@ -35,13 +48,9 @@ const CryptidView = ({cryptid}) => {
       <Section>
         <SnsButtonContainer>
           <TweetButton
-            text={`${cryptid.name}に関する情報はこちら！世界中のUMA情報をまとめました`}
-            hashtags={[
-              "UMA",
-              "未確認生物",
-              cryptid.name,
-              ...(cryptid.alias ? [cryptid.alias] : []),
-            ]}
+            text={tweetText}
+            url={pageUrl}
+            hashtags={hashtags}
           />
         </SnsButtonContainer>
       </Section>
