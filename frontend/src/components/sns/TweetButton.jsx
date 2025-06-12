@@ -13,7 +13,7 @@ const TweetButton = ({ text = "世界中のUMA情報をまとめました", url,
   return (
     <a href={tweetLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "inline-block" }}>
       <ButtonWithIcon iconSrc="image/i-orange-twitter.svg" alt="twitterアイコン">
-        Xに投稿
+        投稿
       </ButtonWithIcon>
     </a>
   );
