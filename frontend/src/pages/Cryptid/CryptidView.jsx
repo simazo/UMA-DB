@@ -11,10 +11,9 @@ import {
 
 
 const CryptidView = ({cryptid}) => {
-
-  //const ogpUrl = `https://uma-db.com/ogp/cryptid/${cryptid.id}.html`;
-  const pageUrl = `https://uma-db.com/cryptids/${cryptid._id}`;
+  
   const tweetText = `${cryptid.name}に関する情報はこちら`;
+  const ogpUrl = `https://uma-db.com/ogp/cryptid/${cryptid.id}.html`;
   const hashtags = ["UMA", "未確認生物", cryptid.name, ...(cryptid.alias ? [cryptid.alias] : [])];
 
   return (
@@ -41,7 +40,7 @@ const CryptidView = ({cryptid}) => {
         <SnsButtonContainer>
           <TweetButton
             text={tweetText}
-            url={pageUrl}
+            url={ogpUrl}
             hashtags={hashtags}
           />
         </SnsButtonContainer>
