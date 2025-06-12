@@ -8,25 +8,16 @@ import {
   LeftColumn,
   RightColumn,
 } from "../../components/layouts/ProfileContainer";
-import imageConfig from "../../config/imageConfig";
-import OGPMeta from "../../components/sns/OGPMeta";
+
 
 const CryptidView = ({cryptid}) => {
-  const imageUrl = imageConfig.imageUrl;
-  const ogpImage = `${imageUrl}/${cryptid.id}/thumbnail.jpeg`;
-  const pageUrl = window.location.href;
-  const title = "【UMA-DB】世界中のUMAをまとめました";
+
+  const ogpUrl = `https://uma-db.com/ogp/cryptid/${cryptid.id}.html`;
   const tweetText = `${cryptid.name}に関する情報はこちら`;
   const hashtags = ["UMA", "未確認生物", cryptid.name, ...(cryptid.alias ? [cryptid.alias] : [])];
 
   return (
     <>
-      <OGPMeta
-        title={title}
-        description={tweetText}
-        image={ogpImage}
-        url={pageUrl}
-      />
       <Section>
         <Header cryptid={cryptid} />
       </Section>
@@ -49,7 +40,7 @@ const CryptidView = ({cryptid}) => {
         <SnsButtonContainer>
           <TweetButton
             text={tweetText}
-            url={pageUrl}
+            url={ogpUrl}
             hashtags={hashtags}
           />
         </SnsButtonContainer>
