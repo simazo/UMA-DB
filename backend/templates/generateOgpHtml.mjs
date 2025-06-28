@@ -21,6 +21,8 @@ export const generateOgpHtml = (cryptid) => `
     <meta name="twitter:title" content="世界中のUMAデータベース" />
     <meta name="twitter:description" content="${cryptid.name}に関する情報を掲載中" />
     <meta name="twitter:image" content="${imageUrl}/${cryptid.id}/thumbnail.jpeg" />
+
+    <meta http-equiv="refresh" content="0; url=/cryptids/${cryptid._id}" />
   </head>
   <body>
   <script>
