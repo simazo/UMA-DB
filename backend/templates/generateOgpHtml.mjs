@@ -22,16 +22,11 @@ export const generateOgpHtml = (cryptid) => `
     <meta name="twitter:description" content="${cryptid.name}に関する情報を掲載中" />
     <meta name="twitter:image" content="${imageUrl}/${cryptid.id}/thumbnail.jpeg" />
 
-    <meta http-equiv="refresh" content="0; url=/cryptids/${cryptid._id}" />
   </head>
   <body>
-  <script>
-    // 本体ページへリダイレクト（JSが有効な場合）
-    window.location.href = "/cryptids/${cryptid._id}";
-    </script>
-    <noscript>
-      <p><a href="/cryptids/${cryptid._id}">こちら</a></p>
-    </noscript>
+    <h1>${cryptid.name}</h1>
+    <p>${cryptid.name}に関する情報を掲載中</p>
+    <a href="https://uma-db.com/cryptids/${cryptid._id}">詳細はこちら</a>
   </body>
 </html>
 `;
