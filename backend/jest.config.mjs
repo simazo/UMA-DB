@@ -1,6 +1,6 @@
 export default {
   transform: {
-    '^.+\\.mjs$': 'babel-jest', // .mjs ファイルをトランスパイルする
+    '^.+\\.(m?js)$': 'babel-jest', // .mjs と .js ファイルをトランスパイルする
   },
   testEnvironment: "node",
   moduleFileExtensions: ['mjs', 'js', 'json', 'node'], // テスト対象の拡張子

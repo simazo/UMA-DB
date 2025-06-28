@@ -12,8 +12,9 @@ import {
 
 const CryptidView = ({cryptid}) => {
   
-  const tweetText = `${cryptid.name}に関する情報まとめました`;
-  const ogpUrl = `https://uma-db.com/ogp/cryptid/${cryptid.id}.html`;
+
+  const tweetText = `${cryptid.name}に関する情報はこちら`;
+  const ogpUrl = `https://uma-db.com/ogp/cryptid/${cryptid._id}`;
   const hashtags = ["UMA", "未確認生物", cryptid.name, ...(cryptid.alias ? [cryptid.alias] : [])];
 
   return (
