@@ -1,5 +1,5 @@
 import imageConfig from "../config/imageConfig.js";
-const imageUrl = imageConfig.imageUrl;
+const imageUrl = 'https://pub-5c0123cb32d24b0c97d41e15ed23f921.r2.dev'; //imageConfig.imageUrl;
 
 export const generateOgpHtml = (cryptid) => `
 <!DOCTYPE html>
