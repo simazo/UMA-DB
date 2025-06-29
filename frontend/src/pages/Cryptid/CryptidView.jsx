@@ -9,12 +9,11 @@ import {
   RightColumn,
 } from "../../components/layouts/ProfileContainer";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const CryptidView = ({cryptid}) => {
-  
-
   const tweetText = `${cryptid.name}に関する情報はこちら`;
-  const ogpUrl = `https://uma-db.com/ogp/${cryptid._id}`;
+  const ogpUrl = `${API_BASE_URL}/ogp/${cryptid._id}`;
   const hashtags = ["UMA", "未確認生物", cryptid.name, ...(cryptid.alias ? [cryptid.alias] : [])];
 
   return (
