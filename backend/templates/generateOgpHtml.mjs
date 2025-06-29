@@ -24,10 +24,13 @@ return `
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content="世界中のUMAデータベース" />
       <meta name="twitter:description" content="${cryptid.name}に関する情報を掲載中" />
+      <meta name="twitter:url" content="https://uma−db.com/cryptids/${cryptid._id}" /> 
       <meta name="twitter:image" content="${imageUrl}/${cryptid.id}/thumbnail.jpeg" />
-
     </head>
     <body>
+      <script>
+        window.location.href = "https://uma-db.com/cryptids/${cryptid._id}";
+      </script>
       <h1>${cryptid.name}</h1>
       <p>${cryptid.name}に関する情報を掲載中</p>
       <a href="https://uma-db.com/cryptids/${cryptid._id}">詳細はこちら</a>
