@@ -70,14 +70,6 @@ export const getCryptidById = async (req, res, next) => {
   
     // console.log("--relatedUMAs--");
     // console.log(relatedUMAs);
-
-    const ua = req.headers["user-agent"];
-    const isBot = /twitterbot|facebookexternalhit|Slackbot|Discordbot|Pinterest/.test(ua);
-
-    if (isBot) {
-      const html = generateOgpHtml({ ...cryptid.toObject(), related_uma: relatedUMAs });
-      return res.set("Content-Type", "text/html").send(html);
-    }
   
     res.json({ ...cryptid.toObject(), related_uma: relatedUMAs });
   } catch(error) {
